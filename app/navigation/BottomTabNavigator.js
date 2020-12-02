@@ -1,22 +1,63 @@
 import React from "react";
-import { NavigationContainer } from "@react-navigation/native";
 import { createMaterialBottomTabNavigator } from "@react-navigation/material-bottom-tabs";
+import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import Home from "../screens/HomeScreen";
 
-const BottomTabNavigator = () => {
+const BottomTabNavigator = ({ navigation, route }) => {
   const TabNavigator = createMaterialBottomTabNavigator();
   return (
-    <NavigationContainer>
-      <TabNavigator.Navigator
-        initialRouteName='Home'
-        activeColor='#f0edf6'
-        inactiveColor='#3e2465'
-        barStyle={{ backgroundColor: "#694fad" }}
-      >
-        <TabNavigator.Screen name='Home' component={Home} />
-        <TabNavigator.Screen name='Movies' component={Home} />
-      </TabNavigator.Navigator>
-    </NavigationContainer>
+    <TabNavigator.Navigator
+      initialRouteName='Home'
+      activeColor='#f0edf6'
+      inactiveColor='#3e2465'
+      barStyle={{ backgroundColor: "#694fad" }}
+    >
+      <TabNavigator.Screen
+        name='Profile'
+        component={Home}
+        options={{
+          tabBarIcon: ({ color }) => (
+            <MaterialIcons name='person' color={color} size={26} />
+          ),
+        }}
+      />
+      <TabNavigator.Screen
+        name='Search'
+        component={Home}
+        options={{
+          tabBarIcon: ({ color }) => (
+            <MaterialIcons name='search' color={color} size={26} />
+          ),
+        }}
+      />
+      <TabNavigator.Screen
+        name='Series'
+        component={Home}
+        options={{
+          tabBarIcon: ({ color }) => (
+            <MaterialIcons name='tv' color={color} size={26} />
+          ),
+        }}
+      />
+      <TabNavigator.Screen
+        name='Movies'
+        component={Home}
+        options={{
+          tabBarIcon: ({ color }) => (
+            <MaterialIcons name='local-movies' color={color} size={26} />
+          ),
+        }}
+      />
+      <TabNavigator.Screen
+        name='Home'
+        component={Home}
+        options={{
+          tabBarIcon: ({ color }) => (
+            <MaterialIcons name='home' color={color} size={26} />
+          ),
+        }}
+      />
+    </TabNavigator.Navigator>
   );
 };
 
