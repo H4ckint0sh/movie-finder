@@ -2,6 +2,10 @@ import React from "react";
 import { createMaterialBottomTabNavigator } from "@react-navigation/material-bottom-tabs";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import Home from "../screens/HomeScreen";
+import Movies from "../screens/MoviesScreen";
+import Series from "../screens/SeriesScreen";
+import Search from "../screens/SearchScreen";
+import Profile from "../screens/ProfileScreen";
 
 const BottomTabNavigator = ({ navigation, route }) => {
   const TabNavigator = createMaterialBottomTabNavigator();
@@ -14,7 +18,7 @@ const BottomTabNavigator = ({ navigation, route }) => {
     >
       <TabNavigator.Screen
         name='Profile'
-        component={Home}
+        component={Profile}
         options={{
           tabBarIcon: ({ color }) => (
             <MaterialIcons name='person' color={color} size={26} />
@@ -23,7 +27,7 @@ const BottomTabNavigator = ({ navigation, route }) => {
       />
       <TabNavigator.Screen
         name='Search'
-        component={Home}
+        component={Search}
         options={{
           tabBarIcon: ({ color }) => (
             <MaterialIcons name='search' color={color} size={26} />
@@ -32,7 +36,7 @@ const BottomTabNavigator = ({ navigation, route }) => {
       />
       <TabNavigator.Screen
         name='Series'
-        component={Home}
+        component={Series}
         options={{
           tabBarIcon: ({ color }) => (
             <MaterialIcons name='tv' color={color} size={26} />
@@ -41,7 +45,7 @@ const BottomTabNavigator = ({ navigation, route }) => {
       />
       <TabNavigator.Screen
         name='Movies'
-        component={Home}
+        component={Movies}
         options={{
           tabBarIcon: ({ color }) => (
             <MaterialIcons name='local-movies' color={color} size={26} />
