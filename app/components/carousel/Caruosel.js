@@ -18,6 +18,7 @@ import Rating from './Rating';
 import MaskedView from '@react-native-community/masked-view';
 import Svg, { Rect } from 'react-native-svg';
 import { LinearGradient } from 'expo-linear-gradient';
+import { useTheme } from 'react-native-paper';
 
 const SPACING = 10;
 const ITEM_SIZE = width * 0.72;
@@ -32,6 +33,7 @@ const Loading = () => (
 );
 
 const Backdrop = ({ movies, scrollX }) => {
+  const theme = useTheme();
   return (
     <View
       style={{ height: BACKDROP_HEIGHT, width, position: 'absolute' }}
@@ -84,7 +86,10 @@ const Backdrop = ({ movies, scrollX }) => {
         }}
       />
       <LinearGradient
-        colors={['rgba(0, 0, 0, 0)', 'white']}
+        colors={[
+          'rgba(0, 0, 0, 0)',
+          theme.dark ? theme.colors.surface : 'white',
+        ]}
         style={{
           height: BACKDROP_HEIGHT,
           width,
@@ -97,6 +102,7 @@ const Backdrop = ({ movies, scrollX }) => {
 };
 
 export default function App() {
+  const theme = useTheme();
   const [movies, setMovies] = React.useState([]);
   const scrollX = React.useRef(new Animated.Value(0)).current;
   React.useEffect(() => {
@@ -117,7 +123,7 @@ export default function App() {
   }
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, { backgroundColor: theme.colors.surface }]}>
       <Backdrop movies={movies} scrollX={scrollX} />
       {/* <StatusBar hidden /> */}
       <Animated.FlatList
@@ -154,27 +160,39 @@ export default function App() {
           });
 
           return (
-            <View style={{ width: ITEM_SIZE }}>
+            <View
+              style={{
+                width: ITEM_SIZE,
+              }}
+            >
               <Animated.View
                 style={{
                   marginHorizontal: SPACING,
                   padding: SPACING * 2,
                   alignItems: 'center',
                   transform: [{ translateY }],
-                  backgroundColor: 'white',
+                  backgroundColor: theme.colors.surface,
                   borderRadius: 34,
+                  borderColor: theme.colors.disabled,
+                  borderWidth: theme.dark ? 1 : 0,
                 }}
               >
                 <Image
                   source={{ uri: item.poster }}
                   style={styles.posterImage}
                 />
-                <Text style={{ fontSize: 24 }} numberOfLines={1}>
+                <Text
+                  style={{ fontSize: 24, color: theme.colors.onSurface }}
+                  numberOfLines={1}
+                >
                   {item.title}
                 </Text>
                 <Rating rating={item.rating} />
                 <Genres genres={item.genres} />
-                <Text style={{ fontSize: 12 }} numberOfLines={3}>
+                <Text
+                  style={{ fontSize: 12, color: theme.colors.onSurface }}
+                  numberOfLines={3}
+                >
                   {item.description}
                 </Text>
               </Animated.View>

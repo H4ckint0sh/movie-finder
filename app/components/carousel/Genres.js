@@ -1,13 +1,17 @@
 import * as React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
+import { useTheme } from 'react-native-paper';
 
 export default function Genres({ genres }) {
+  const theme = useTheme();
   return (
     <View style={styles.genres}>
       {genres.map((genre, i) => {
         return (
           <View key={genre} style={styles.genre}>
-            <Text style={styles.genreText}>{genre}</Text>
+            <Text style={[styles.genreText, { color: theme.colors.onSurface }]}>
+              {genre}
+            </Text>
           </View>
         );
       })}
@@ -33,6 +37,6 @@ const styles = StyleSheet.create({
   },
   genreText: {
     fontSize: 9,
-    opacity: 0.4,
+    opacity: 0.7,
   },
 });
