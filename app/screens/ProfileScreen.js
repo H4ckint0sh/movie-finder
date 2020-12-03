@@ -1,9 +1,17 @@
-import React from 'react';
-import { StyleSheet, View } from 'react-native';
-import { Title, useTheme, Button } from 'react-native-paper';
+import React, { useContext } from 'react';
+import { StyleSheet, View, Text } from 'react-native';
+import {
+  Title,
+  useTheme,
+  Button,
+  TouchableRipple,
+  Switch,
+} from 'react-native-paper';
+import PreferencesContext from '../context/preferencesContext';
 
 const ProfileScreen = () => {
-  const theme = useTheme();
+  const paperTheme = useTheme();
+  const { theme, toggleTheme } = useContext(PreferencesContext);
   const styles = StyleSheet.create({
     container: {
       flex: 1,
@@ -11,19 +19,20 @@ const ProfileScreen = () => {
       alignItems: 'center',
     },
     text: {
-      color: theme.colors.primary,
+      color: paperTheme.colors.primary,
     },
   });
   return (
     <View style={styles.container}>
       <Title style={styles.text}>Profile Screen</Title>
-      <Button
-        icon="camera"
-        mode="default"
-        onPress={() => console.log('Pressed')}
-      >
-        darkTheme
-      </Button>
+      <TouchableRipple onPress={toggleTheme}>
+        <View>
+          <Text>DarkTheme</Text>
+          <View pointerEvents="none">
+            <Switch value={theme === 'dark'} />
+          </View>
+        </View>
+      </TouchableRipple>
     </View>
   );
 };

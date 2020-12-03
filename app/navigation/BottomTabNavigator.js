@@ -1,5 +1,6 @@
 import React from 'react';
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
+import { useTheme } from 'react-native-paper';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Home from '../screens/HomeScreen';
 import Movies from '../screens/MoviesScreen';
@@ -9,12 +10,16 @@ import Profile from '../screens/ProfileScreen';
 
 const BottomTabNavigator = ({ navigation, route }) => {
   const TabNavigator = createMaterialBottomTabNavigator();
+  const theme = useTheme();
   return (
     <TabNavigator.Navigator
       initialRouteName="Home"
-      activeColor="#f0edf6"
-      inactiveColor="#3e2465"
-      barStyle={{ backgroundColor: '#694fad' }}
+      activeColor={theme.colors.primary}
+      inactiveColor={theme.colors.onSurface}
+      barStyle={{
+        backgroundColor: theme.colors.surface,
+        color: theme.colors.disabled,
+      }}
     >
       <TabNavigator.Screen
         name="Home"
