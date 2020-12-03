@@ -12,7 +12,6 @@ const MoviesScreen = () => {
       const result = await api.getBYGenre();
       setActionMovies(result);
     })();
-    console.log(actionMovies);
   }, []);
   const styles = StyleSheet.create({
     container: {
