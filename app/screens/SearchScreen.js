@@ -1,7 +1,7 @@
-import React from "react";
-import { StyleSheet, SafeAreaView } from "react-native";
-import { Title, useTheme } from "react-native-paper";
-import Search from "../components/Searchbar";
+import React from 'react';
+import { StyleSheet, SafeAreaView } from 'react-native';
+import { Title, useTheme } from 'react-native-paper';
+import Search from '../components/Searchbar';
 
 const SearchScreen = () => {
   const theme = useTheme();
