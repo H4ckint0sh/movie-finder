@@ -25,8 +25,15 @@ const BottomTabNavigator = ({ navigation, route }) => {
         name="Home"
         component={Home}
         options={{
-          tabBarIcon: ({ color }) => (
-            <MaterialIcons name="home" color={color} size={26} />
+          tabBarIcon: ({ color, focused }) => (
+            <MaterialIcons
+              name="home"
+              style={{
+                color: focused ? theme.colors.primary : theme.colors.disabled,
+              }}
+              color={color}
+              size={26}
+            />
           ),
         }}
       />
@@ -34,8 +41,15 @@ const BottomTabNavigator = ({ navigation, route }) => {
         name="Movies"
         component={Movies}
         options={{
-          tabBarIcon: ({ color }) => (
-            <MaterialIcons name="local-movies" color={color} size={26} />
+          tabBarIcon: ({ color, focused }) => (
+            <MaterialIcons
+              name="local-movies"
+              style={{
+                color: focused ? theme.colors.primary : theme.colors.disabled,
+              }}
+              color={color}
+              size={26}
+            />
           ),
         }}
       />
@@ -43,8 +57,15 @@ const BottomTabNavigator = ({ navigation, route }) => {
         name="Series"
         component={Series}
         options={{
-          tabBarIcon: ({ color }) => (
-            <MaterialIcons name="tv" color={color} size={26} />
+          tabBarIcon: ({ color, focused }) => (
+            <MaterialIcons
+              name="tv"
+              style={{
+                color: focused ? theme.colors.primary : theme.colors.disabled,
+              }}
+              color={color}
+              size={26}
+            />
           ),
         }}
       />
@@ -52,8 +73,15 @@ const BottomTabNavigator = ({ navigation, route }) => {
         name="Search"
         component={Search}
         options={{
-          tabBarIcon: ({ color }) => (
-            <MaterialIcons name="search" color={color} size={26} />
+          tabBarIcon: ({ color, focused }) => (
+            <MaterialIcons
+              name="search"
+              style={{
+                color: focused ? theme.colors.primary : theme.colors.disabled,
+              }}
+              color={color}
+              size={26}
+            />
           ),
         }}
       />
@@ -61,8 +89,15 @@ const BottomTabNavigator = ({ navigation, route }) => {
         name="Profile"
         component={Profile}
         options={{
-          tabBarIcon: ({ color }) => (
-            <MaterialIcons name="person" color={color} size={26} />
+          tabBarIcon: ({ color, focused }) => (
+            <MaterialIcons
+              name="person"
+              style={{
+                color: focused ? theme.colors.primary : theme.colors.disabled,
+              }}
+              color={color}
+              size={26}
+            />
           ),
         }}
       />
