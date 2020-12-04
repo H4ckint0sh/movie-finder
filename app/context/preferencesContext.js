@@ -1,7 +1,7 @@
 import { createContext } from 'react';
 
 const PreferencesContext = createContext({
-  theme: 'light',
+  theme: 'dark',
   toggleTheme: () => {},
 });
 

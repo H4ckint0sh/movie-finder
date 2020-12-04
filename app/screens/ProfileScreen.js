@@ -26,10 +26,16 @@ const ProfileScreen = () => {
     <View style={styles.container}>
       <Title style={styles.text}>Profile Screen</Title>
       <TouchableRipple onPress={toggleTheme}>
-        <View>
-          <Text>DarkTheme</Text>
+        <View
+          style={{
+            flexDirection: 'row',
+            alignItems: 'center',
+            justifySelf: 'space-between',
+          }}
+        >
+          <Text>LightTheme</Text>
           <View pointerEvents="none">
-            <Switch value={theme === 'dark'} />
+            <Switch value={theme === 'light'} />
           </View>
         </View>
       </TouchableRipple>

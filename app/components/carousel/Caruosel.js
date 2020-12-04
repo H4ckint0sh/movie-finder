@@ -123,7 +123,14 @@ export default function App() {
   }
 
   return (
-    <View style={[styles.container, { backgroundColor: theme.colors.surface }]}>
+    <View
+      style={[
+        styles.container,
+        {
+          backgroundColor: theme.colors.surface,
+        },
+      ]}
+    >
       <Backdrop movies={movies} scrollX={scrollX} />
       {/* <StatusBar hidden /> */}
       <Animated.FlatList

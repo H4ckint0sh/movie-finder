@@ -2,11 +2,15 @@ import React from 'react';
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 import { useTheme } from 'react-native-paper';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+
+// screens
 import Home from '../screens/HomeScreen';
 import Movies from '../screens/MoviesScreen';
 import Series from '../screens/SeriesScreen';
 import Search from '../screens/SearchScreen';
 import Profile from '../screens/ProfileScreen';
+
+import CustomToptabs from '../navigation/HomeScreenToptabs';
 
 const BottomTabNavigator = ({ navigation, route }) => {
   const TabNavigator = createMaterialBottomTabNavigator();
@@ -19,15 +23,17 @@ const BottomTabNavigator = ({ navigation, route }) => {
       barStyle={{
         backgroundColor: theme.colors.surface,
         color: theme.colors.disabled,
+        borderTopColor: theme.colors.disabled,
+        borderTopWidth: 1,
       }}
     >
       <TabNavigator.Screen
-        name="Home"
-        component={Home}
+        name="Latest"
+        component={CustomToptabs}
         options={{
           tabBarIcon: ({ color, focused }) => (
             <MaterialIcons
-              name="home"
+              name="new-releases"
               style={{
                 color: focused ? theme.colors.primary : theme.colors.disabled,
               }}
