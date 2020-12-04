@@ -101,13 +101,13 @@ const Backdrop = ({ movies, scrollX }) => {
   );
 };
 
-export default function App() {
+export default function Carousel({ type }) {
   const theme = useTheme();
   const [movies, setMovies] = React.useState([]);
   const scrollX = React.useRef(new Animated.Value(0)).current;
   React.useEffect(() => {
     const fetchData = async () => {
-      const movies = await api.getPopular();
+      const movies = await api.getTrending(type);
       // Add empty items to create fake space
       // [empty_item, ...movies, empty_item]
       setMovies([{ key: 'empty-left' }, ...movies, { key: 'empty-right' }]);

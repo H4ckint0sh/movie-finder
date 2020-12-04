@@ -4,7 +4,7 @@ import { useTheme } from 'react-native-paper';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
 // screens
-import Home from '../screens/HomeScreen';
+import Home from '../screens/TrendingMoviesScreen';
 import Movies from '../screens/MoviesScreen';
 import Series from '../screens/SeriesScreen';
 import Search from '../screens/SearchScreen';
@@ -28,12 +28,12 @@ const BottomTabNavigator = ({ navigation, route }) => {
       }}
     >
       <TabNavigator.Screen
-        name="Latest"
+        name="Trending"
         component={CustomToptabs}
         options={{
           tabBarIcon: ({ color, focused }) => (
             <MaterialIcons
-              name="new-releases"
+              name="movie-filter"
               style={{
                 color: focused ? theme.colors.primary : theme.colors.disabled,
               }}

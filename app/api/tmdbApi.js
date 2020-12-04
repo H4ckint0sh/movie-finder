@@ -23,13 +23,13 @@ const genres = {
   10770: 'TV Movie',
 };
 
-const API_URL = `/discover/movie?api_key=${API_KEY}&sort_by=popularity.desc`;
 const getImagePath = (path) =>
   `https://image.tmdb.org/t/p/w440_and_h660_face${path}`;
 const getBackdropPath = (path) =>
   `https://image.tmdb.org/t/p/w370_and_h556_multi_faces${path}`;
 
-const getPopular = async () => {
+const getTrending = async (type) => {
+  const API_URL = `/trending/${type}/week?api_key=${API_KEY}`;
   const {
     data: { results },
   } = await client.get(API_URL);
@@ -64,6 +64,6 @@ const getBYGenre = async () => {
 };
 
 export default {
-  getPopular,
+  getTrending,
   getBYGenre,
 };

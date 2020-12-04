@@ -3,7 +3,8 @@ import { Text, View, TouchableOpacity, StatusBar } from 'react-native';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import { useTheme } from 'react-native-paper';
 import Animated from 'react-native-reanimated';
-import HomeScreen from '../screens/HomeScreen';
+import MovieScreen from '../screens/TrendingMoviesScreen';
+import TVScreen from '../screens/TrendingTvSeriesScreen';
 
 function CustomTabbar({ state, descriptors, navigation, position }) {
   const theme = useTheme();
@@ -96,30 +97,6 @@ function CustomTabbar({ state, descriptors, navigation, position }) {
   );
 }
 
-function MovieScreen() {
-  return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>Movies!</Text>
-    </View>
-  );
-}
-
-function SeriesScreen() {
-  const theme = useTheme();
-  return (
-    <View
-      style={{
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: theme.colors.surface,
-      }}
-    >
-      <Text style={{ color: theme.colors.onSurface }}>TV Series!</Text>
-    </View>
-  );
-}
-
 function PersonsScreen() {
   const theme = useTheme();
   return (
@@ -144,8 +121,8 @@ export default function HomeScreenToptabs() {
       swipeEnabled={false}
       tabBar={(props) => <CustomTabbar {...props} />}
     >
-      <Tab.Screen name="Movies" component={HomeScreen} />
-      <Tab.Screen name="TV Series" component={SeriesScreen} />
+      <Tab.Screen name="Movies" component={MovieScreen} />
+      <Tab.Screen name="TV Series" component={TVScreen} />
       <Tab.Screen name="Persons" component={PersonsScreen} />
     </Tab.Navigator>
   );

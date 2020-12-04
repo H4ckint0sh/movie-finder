@@ -17,6 +17,7 @@ const ProfileScreen = () => {
       flex: 1,
       justifyContent: 'center',
       alignItems: 'center',
+      backgroundColor: paperTheme.colors.surface,
     },
     text: {
       color: paperTheme.colors.primary,
@@ -33,7 +34,7 @@ const ProfileScreen = () => {
             justifySelf: 'space-between',
           }}
         >
-          <Text>LightTheme</Text>
+          <Text style={{ color: paperTheme.colors.onSurface }}>LightTheme</Text>
           <View pointerEvents="none">
             <Switch value={theme === 'light'} />
           </View>
