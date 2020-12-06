@@ -5,6 +5,7 @@ import { useTheme } from 'react-native-paper';
 import Animated from 'react-native-reanimated';
 import MovieScreen from '../screens/TrendingMoviesScreen';
 import TVScreen from '../screens/TrendingTvSeriesScreen';
+import PersonsScreen from '../screens/TrendingPersonsScreen';
 
 function CustomTabbar({ state, descriptors, navigation, position }) {
   const theme = useTheme();
@@ -93,22 +94,6 @@ function CustomTabbar({ state, descriptors, navigation, position }) {
           </TouchableOpacity>
         );
       })}
-    </View>
-  );
-}
-
-function PersonsScreen() {
-  const theme = useTheme();
-  return (
-    <View
-      style={{
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: theme.colors.surface,
-      }}
-    >
-      <Text style={{ color: theme.colors.onSurface }}>Persons!</Text>
     </View>
   );
 }
