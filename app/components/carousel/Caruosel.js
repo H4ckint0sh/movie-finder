@@ -10,7 +10,6 @@ import {
   Animated,
   TouchableOpacity,
 } from 'react-native';
-import Constants from 'expo-constants';
 const { width, height } = Dimensions.get('window');
 import api from '../../api/tmdbApi';
 import Genres from './Genres';

@@ -3,8 +3,8 @@ import { Text, View, TouchableOpacity, StatusBar } from 'react-native';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import { useTheme } from 'react-native-paper';
 import Animated from 'react-native-reanimated';
-import MovieScreen from '../screens/TrendingMoviesScreen';
-import TVScreen from '../screens/TrendingTvSeriesScreen';
+import MovieScreen from '../screens/trending/TrendingMoviesScreen';
+import TVScreen from '../screens/trending/TrendingTvSeriesScreen';
 import PersonsScreen from '../screens/trending/TrendingPersonsScreen';
 
 function CustomTabbar({ state, descriptors, navigation, position }) {
