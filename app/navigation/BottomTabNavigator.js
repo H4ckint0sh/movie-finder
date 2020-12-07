@@ -11,7 +11,7 @@ import Profile from '../screens/ProfileScreen';
 
 import HomeScreenTopTabs from '../navigation/HomeScreenToptabs';
 
-const BottomTabNavigator = ({ navigation, route }) => {
+const BottomTabNavigator = () => {
   const TabNavigator = createMaterialBottomTabNavigator();
   const theme = useTheme();
   return (
