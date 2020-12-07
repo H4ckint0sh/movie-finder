@@ -13,6 +13,10 @@ const getTrending = async (type) => {
   const {
     data: { results },
   } = await client.get(API_URL);
+
+  if (type === 'person') {
+    return results;
+  }
   const movies = results.map(
     ({
       id,

@@ -10,7 +10,7 @@ import Series from '../screens/SeriesScreen';
 import Search from '../screens/SearchScreen';
 import Profile from '../screens/ProfileScreen';
 
-import CustomToptabs from '../navigation/HomeScreenToptabs';
+import HomeScreenTopTabs from '../navigation/HomeScreenToptabs';
 
 const BottomTabNavigator = ({ navigation, route }) => {
   const TabNavigator = createMaterialBottomTabNavigator();
@@ -29,7 +29,7 @@ const BottomTabNavigator = ({ navigation, route }) => {
     >
       <TabNavigator.Screen
         name="Trending"
-        component={CustomToptabs}
+        component={HomeScreenTopTabs}
         options={{
           tabBarIcon: ({ color, focused }) => (
             <MaterialIcons
