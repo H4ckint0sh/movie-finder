@@ -9,6 +9,7 @@ const SeriesScreen = () => {
       flex: 1,
       justifyContent: 'center',
       alignItems: 'center',
+      backgroundColor: theme.colors.surface,
     },
     text: {
       color: theme.colors.primary,

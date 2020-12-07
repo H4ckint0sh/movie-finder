@@ -1,15 +1,50 @@
-import React from 'react';
-import { Provider as PaperProvider } from 'react-native-paper';
+import React, { useState, useMemo } from 'react';
+import {
+  Provider as PaperProvider,
+  DefaultTheme,
+  DarkTheme,
+} from 'react-native-paper';
 import { NavigationContainer } from '@react-navigation/native';
 import BottomNavigator from '../navigation/BottomTabNavigator';
+import { useColorScheme } from 'react-native-appearance';
+import PreferencesContext from '../context/preferencesContext';
 
 const Main = () => {
+  const colorScheme = useColorScheme();
+  const [theme, setTheme] = useState(colorScheme === 'dark' ? 'dark' : 'light');
+
+  const toggleTheme = () => {
+    setTheme((theme) => (theme === 'light' ? 'dark' : 'light'));
+  };
+
+  const preferences = useMemo(
+    () => ({
+      toggleTheme,
+      theme,
+    }),
+    [theme]
+  );
+
   return (
-    <PaperProvider>
-      <NavigationContainer>
-        <BottomNavigator />
-      </NavigationContainer>
-    </PaperProvider>
+    <PreferencesContext.Provider value={preferences}>
+      <PaperProvider
+        theme={
+          theme === 'light'
+            ? {
+                ...DefaultTheme,
+                colors: { ...DefaultTheme.colors, primary: '#1ba1f2' },
+              }
+            : {
+                ...DarkTheme,
+                colors: { ...DarkTheme.colors, primary: '#1ba1f2' },
+              }
+        }
+      >
+        <NavigationContainer>
+          <BottomNavigator />
+        </NavigationContainer>
+      </PaperProvider>
+    </PreferencesContext.Provider>
   );
 };
 

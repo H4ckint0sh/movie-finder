@@ -8,6 +8,7 @@ const SearchScreen = () => {
   const styles = StyleSheet.create({
     container: {
       flex: 1,
+      backgroundColor: theme.colors.surface,
     },
     search: {},
     text: {

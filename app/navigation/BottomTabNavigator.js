@@ -1,27 +1,44 @@
 import React from 'react';
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
+import { useTheme } from 'react-native-paper';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-import Home from '../screens/HomeScreen';
+
+// screens
 import Movies from '../screens/MoviesScreen';
 import Series from '../screens/SeriesScreen';
 import Search from '../screens/SearchScreen';
 import Profile from '../screens/ProfileScreen';
 
+import HomeScreenTopTabs from '../navigation/HomeScreenToptabs';
+
 const BottomTabNavigator = () => {
   const TabNavigator = createMaterialBottomTabNavigator();
+  const theme = useTheme();
   return (
     <TabNavigator.Navigator
       initialRouteName="Home"
-      activeColor="#f0edf6"
-      inactiveColor="#3e2465"
-      barStyle={{ backgroundColor: '#694fad' }}
+      activeColor={theme.colors.primary}
+      inactiveColor={theme.colors.onSurface}
+      barStyle={{
+        backgroundColor: theme.colors.surface,
+        color: theme.colors.disabled,
+        borderTopColor: theme.colors.disabled,
+        borderTopWidth: 1,
+      }}
     >
       <TabNavigator.Screen
-        name="Home"
-        component={Home}
+        name="Trending"
+        component={HomeScreenTopTabs}
         options={{
-          tabBarIcon: ({ color }) => (
-            <MaterialIcons name="home" color={color} size={26} />
+          tabBarIcon: ({ color, focused }) => (
+            <MaterialIcons
+              name="movie-filter"
+              style={{
+                color: focused ? theme.colors.primary : theme.colors.disabled,
+              }}
+              color={color}
+              size={26}
+            />
           ),
         }}
       />
@@ -29,8 +46,15 @@ const BottomTabNavigator = () => {
         name="Movies"
         component={Movies}
         options={{
-          tabBarIcon: ({ color }) => (
-            <MaterialIcons name="local-movies" color={color} size={26} />
+          tabBarIcon: ({ color, focused }) => (
+            <MaterialIcons
+              name="local-movies"
+              style={{
+                color: focused ? theme.colors.primary : theme.colors.disabled,
+              }}
+              color={color}
+              size={26}
+            />
           ),
         }}
       />
@@ -38,8 +62,15 @@ const BottomTabNavigator = () => {
         name="Series"
         component={Series}
         options={{
-          tabBarIcon: ({ color }) => (
-            <MaterialIcons name="tv" color={color} size={26} />
+          tabBarIcon: ({ color, focused }) => (
+            <MaterialIcons
+              name="tv"
+              style={{
+                color: focused ? theme.colors.primary : theme.colors.disabled,
+              }}
+              color={color}
+              size={26}
+            />
           ),
         }}
       />
@@ -47,8 +78,15 @@ const BottomTabNavigator = () => {
         name="Search"
         component={Search}
         options={{
-          tabBarIcon: ({ color }) => (
-            <MaterialIcons name="search" color={color} size={26} />
+          tabBarIcon: ({ color, focused }) => (
+            <MaterialIcons
+              name="search"
+              style={{
+                color: focused ? theme.colors.primary : theme.colors.disabled,
+              }}
+              color={color}
+              size={26}
+            />
           ),
         }}
       />
@@ -56,8 +94,15 @@ const BottomTabNavigator = () => {
         name="Profile"
         component={Profile}
         options={{
-          tabBarIcon: ({ color }) => (
-            <MaterialIcons name="person" color={color} size={26} />
+          tabBarIcon: ({ color, focused }) => (
+            <MaterialIcons
+              name="person"
+              style={{
+                color: focused ? theme.colors.primary : theme.colors.disabled,
+              }}
+              color={color}
+              size={26}
+            />
           ),
         }}
       />
