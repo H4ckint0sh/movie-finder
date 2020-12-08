@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { Fragment, useContext, useState } from 'react';
 import { StyleSheet, View, SafeAreaView } from 'react-native';
 import {
   Title,
@@ -36,32 +36,45 @@ const ProfileScreen = () => {
       backgroundColor: paperTheme.colors.surface,
     },
     profileContainer: {
-      flex: 0.7,
+      flexDirection: 'row',
+      paddingLeft: 15,
+    },
+    nameContainer: {
       justifyContent: 'center',
-      alignItems: 'center',
+      paddingLeft: 15,
     },
-    name: {
-      paddingTop: 10,
+    infoContainer: {
+      marginVertical: 50,
     },
-    userName: {},
   });
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.profileContainer}>
         <Avatar.Image
           style={styles.avatar}
-          size={100}
+          size={80}
           source={{ uri: 'https://randomuser.me/api/portraits/men/45.jpg' }}
         />
-        <Title style={styles.name}>Alijan Adeli</Title>
-        <Caption style={styles.userName}>@H4ckint0sh</Caption>
+        <View style={styles.nameContainer}>
+          <Title>Alijan Adeli</Title>
+          <Caption>@H4ckint0sh</Caption>
+        </View>
+      </View>
+      <View style={styles.infoContainer}>
+        <List.Item
+          title="alijan.adeli@icloud.com"
+          left={(props) => <List.Icon {...props} icon="email-outline" />}
+        />
+        <List.Item
+          title="********"
+          left={(props) => <List.Icon {...props} icon="key-outline" />}
+        />
       </View>
       <Divider />
       {listArray.map((item, index) => {
         return (
-          <>
+          <Fragment key={`item-${index}`}>
             <ListItem
-              key={`item-${index}`}
               title={item.title}
               icon={
                 index === 3 && showColoerSettings === true
@@ -73,7 +86,7 @@ const ProfileScreen = () => {
               }
             />
             <Divider />
-          </>
+          </Fragment>
         );
       })}
       <List.Item
