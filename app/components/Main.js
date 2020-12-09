@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useContext } from 'react';
 import {
   Provider as PaperProvider,
   DefaultTheme,
@@ -12,17 +12,23 @@ import PreferencesContext from '../context/preferencesContext';
 const Main = () => {
   const colorScheme = useColorScheme();
   const [theme, setTheme] = useState(colorScheme === 'dark' ? 'dark' : 'light');
-
+  const [color, setColor] = useState('#1ba1f2');
   const toggleTheme = () => {
     setTheme((theme) => (theme === 'light' ? 'dark' : 'light'));
+  };
+
+  const setPrimaryColor = (_color) => {
+    setColor(_color);
   };
 
   const preferences = useMemo(
     () => ({
       toggleTheme,
+      setPrimaryColor,
       theme,
+      color,
     }),
-    [theme]
+    [theme, color]
   );
 
   return (
@@ -32,11 +38,11 @@ const Main = () => {
           theme === 'light'
             ? {
                 ...DefaultTheme,
-                colors: { ...DefaultTheme.colors, primary: '#1ba1f2' },
+                colors: { ...DefaultTheme.colors, primary: `${color}` },
               }
             : {
                 ...DarkTheme,
-                colors: { ...DarkTheme.colors, primary: '#1ba1f2' },
+                colors: { ...DarkTheme.colors, primary: `${color}` },
               }
         }
       >
