@@ -8,6 +8,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import BottomNavigator from '../navigation/BottomTabNavigator';
 import { useColorScheme } from 'react-native-appearance';
 import PreferencesContext from '../context/preferencesContext';
+import LoginNavigation from '../navigation/LoginNavigation';
 
 const Main = () => {
   const colorScheme = useColorScheme();
@@ -41,7 +42,7 @@ const Main = () => {
         }
       >
         <NavigationContainer>
-          <BottomNavigator />
+          <LoginNavigation />
         </NavigationContainer>
       </PaperProvider>
     </PreferencesContext.Provider>
