@@ -79,7 +79,6 @@ export default function PersonList({ navigation }) {
       const persons = await api.getTrending('person');
       setData(persons);
     })();
-    console.log(data);
   }, []);
 
   useEffect(() => {

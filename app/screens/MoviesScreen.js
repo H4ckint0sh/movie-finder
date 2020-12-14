@@ -1,33 +1,43 @@
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, View } from 'react-native';
-import { Title, useTheme } from 'react-native-paper';
+import {
+  Image,
+  StyleSheet,
+  View,
+  Dimensions,
+  SafeAreaView,
+} from 'react-native';
+import { ScrollView } from 'react-native-gesture-handler';
+import { useTheme } from 'react-native-paper';
 import api from '../api/tmdbApi';
+import FlatListSmall from '../components/flatlist/FlatListSmall';
+import FlatListBig from '../components/flatlist/FlatListBig';
 
 const MoviesScreen = () => {
   const theme = useTheme();
 
+  const [playingMovies, setPlayingMovies] = useState([]);
   const [actionMovies, setActionMovies] = useState([]);
+  const [dramaMovies, setDramaMovies] = useState([]);
+
   useEffect(() => {
     (async () => {
-      const result = await api.getBYGenre();
-      setActionMovies(result);
+      const nowPlaying = await api.getNowPlaying();
+      setPlayingMovies(nowPlaying);
+      const action = await api.getBYGenre('28');
+      setActionMovies(action);
+      const drama = await api.getBYGenre('18');
+      setDramaMovies(drama);
     })();
   }, []);
-  const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      justifyContent: 'center',
-      alignItems: 'center',
-      backgroundColor: theme.colors.surface,
-    },
-    text: {
-      color: theme.colors.primary,
-    },
-  });
+
   return (
-    <View style={styles.container}>
-      <Title style={styles.text}>Movies Screen</Title>
-    </View>
+    <SafeAreaView style={{ backgroundColor: theme.colors.surface }}>
+      <ScrollView>
+        <FlatListBig data={playingMovies} heading="In Cinemas" />
+        <FlatListSmall data={actionMovies} heading="action" />
+        <FlatListSmall data={dramaMovies} heading="drama" />
+      </ScrollView>
+    </SafeAreaView>
   );
 };
 

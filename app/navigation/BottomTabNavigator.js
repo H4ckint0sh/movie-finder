@@ -7,7 +7,7 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Movies from '../screens/MoviesScreen';
 import Series from '../screens/SeriesScreen';
 import Search from '../screens/SearchScreen';
-import Profile from '../screens/ProfileScreen';
+import Profile from '../screens/profile/ProfileScreen';
 
 import HomeScreenTopTabs from '../navigation/HomeScreenToptabs';
 
