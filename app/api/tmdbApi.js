@@ -100,8 +100,15 @@ const getNowPlaying = async () => {
   return movies;
 };
 
+const multiSearch = async (query) => {
+  const API_URL = `/search/multi?api_key=${API_KEY}&language=en-US&query=${query}&page=1&include_adult=false`;
+  const results = await client.get(API_URL);
+  return results;
+};
+
 export default {
   getTrending,
   getBYGenre,
   getNowPlaying,
+  multiSearch,
 };
