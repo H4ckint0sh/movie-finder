@@ -202,7 +202,7 @@ const ProfileScreen = () => {
       />
       <Divider />
       <List.Item
-        title="Push Notifications"
+        title="Notifications"
         right={(props) => (
           <Switch value={isSwitchOn} onValueChange={onToggleSwitch} />
         )}
