@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useContext } from 'react';
 import {
   Provider as PaperProvider,
   DefaultTheme,
@@ -14,17 +14,23 @@ import Firebase, { FirebaseProvider } from '../config/Firebase';
 const Main = () => {
   const colorScheme = useColorScheme();
   const [theme, setTheme] = useState(colorScheme === 'dark' ? 'dark' : 'light');
-
+  const [color, setColor] = useState('#1ba1f2');
   const toggleTheme = () => {
     setTheme((theme) => (theme === 'light' ? 'dark' : 'light'));
+  };
+
+  const setPrimaryColor = (_color) => {
+    setColor(_color);
   };
 
   const preferences = useMemo(
     () => ({
       toggleTheme,
+      setPrimaryColor,
       theme,
+      color,
     }),
-    [theme]
+    [theme, color]
   );
 
   return (

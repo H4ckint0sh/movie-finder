@@ -42,12 +42,66 @@ const getTrending = async (type) => {
   return movies;
 };
 
-const getBYGenre = async () => {
-  const result = await client.get(`/genre/movie/list?api_key=${API_KEY}`);
-  return result;
+const getBYGenre = async (id) => {
+  const API_URL = `/discover/movie?api_key=${API_KEY}&with_genres=${id}`;
+  const {
+    data: { results },
+  } = await client.get(API_URL);
+  const movies = results.map(
+    ({
+      id,
+      original_title,
+      poster_path,
+      backdrop_path,
+      vote_average,
+      overview,
+      release_date,
+      genre_ids,
+    }) => ({
+      key: id,
+      title: original_title,
+      poster: getImagePath(poster_path),
+      backdrop: getBackdropPath(backdrop_path),
+      rating: vote_average,
+      description: overview,
+      releaseDate: release_date,
+      genres: genre_ids.map((genre) => genres[genre]),
+    })
+  );
+  return movies;
+};
+
+const getNowPlaying = async () => {
+  const API_URL = `/movie/now_playing?api_key=${API_KEY}&language=en-US&page=1`;
+  const {
+    data: { results },
+  } = await client.get(API_URL);
+  const movies = results.map(
+    ({
+      id,
+      original_title,
+      poster_path,
+      backdrop_path,
+      vote_average,
+      overview,
+      release_date,
+      genre_ids,
+    }) => ({
+      key: id,
+      title: original_title,
+      poster: getImagePath(poster_path),
+      backdrop: getBackdropPath(backdrop_path),
+      rating: vote_average,
+      description: overview,
+      releaseDate: release_date,
+      genres: genre_ids.map((genre) => genres[genre]),
+    })
+  );
+  return movies;
 };
 
 export default {
   getTrending,
   getBYGenre,
+  getNowPlaying,
 };
