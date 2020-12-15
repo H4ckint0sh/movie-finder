@@ -1,11 +1,11 @@
-import React from 'react';
+import React, { useContext, useEffect } from 'react';
 import { StyleSheet, Text, View, FlatList } from 'react-native';
 import ResultItem from './ResultItem';
 
 const ResultsFlatList = ({ data }) => {
   return (
-    <View>
-      {data.length !== 0 && (
+    <View style={styles.container}>
+      {data && (
         <FlatList
           data={data}
           keyExtractor={(item) => item.id}
@@ -18,4 +18,9 @@ const ResultsFlatList = ({ data }) => {
 
 export default ResultsFlatList;
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  container: {
+    marginTop: 150,
+    marginHorizontal: 20,
+  },
+});

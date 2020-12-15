@@ -7,6 +7,7 @@ import Movies from '../screens/search/MoviesResultsScreen';
 import Series from '../screens/search/SeriesResultsScreen';
 import Persons from '../screens/search/PersonsResultsScreen';
 import Search from '../components/search/Searchbar';
+import { SearchProvider } from '../context/searchQueryContext';
 
 function CustomTabbar({ state, descriptors, navigation, position }) {
   const theme = useTheme();
@@ -104,13 +105,15 @@ const Tab = createMaterialTopTabNavigator();
 
 export default function HomeScreenToptabs() {
   return (
-    <Tab.Navigator
-      swipeEnabled={false}
-      tabBar={(props) => <CustomTabbar {...props} />}
-    >
-      <Tab.Screen name="Movies" component={Movies} />
-      <Tab.Screen name="Series" component={Series} />
-      <Tab.Screen name="Persons" component={Persons} />
-    </Tab.Navigator>
+    <SearchProvider>
+      <Tab.Navigator
+        swipeEnabled={false}
+        tabBar={(props) => <CustomTabbar {...props} />}
+      >
+        <Tab.Screen name="Movies" component={Movies} />
+        <Tab.Screen name="Series" component={Series} />
+        <Tab.Screen name="Persons" component={Persons} />
+      </Tab.Navigator>
+    </SearchProvider>
   );
 }

@@ -1,42 +1,18 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useContext, useState } from 'react';
 import { Searchbar, useTheme } from 'react-native-paper';
-import api from '../../api/tmdbApi';
+import { searchContext } from '../../context/searchQueryContext';
 
 const Search = () => {
   const theme = useTheme();
-  const [searchQuery, setSearchQuery] = React.useState('');
-  const [searchResults, setSearchResults] = React.useState([]);
+  const [query, setQuery] = useContext(searchContext);
 
-  const [movieResults, setMovieResults] = React.useState([]);
-  const [seriesResults, setSeriesResults] = React.useState([]);
-  const [personsResults, setPersonsResults] = React.useState([]);
-
-  const onChangeSearch = (query) => setSearchQuery(query);
-
-  useEffect(() => {
-    (async () => {
-      if (searchQuery.length) {
-        const {
-          data: { results },
-        } = await api.multiSearch(searchQuery);
-        const movies = results.filter((item) => item.media_type === 'movie');
-        setMovieResults(movies);
-        const series = results.filter((item) => item.media_type === 'tv');
-        setSeriesResults(series);
-        const persons = results.filter((item) => item.media_type === 'person');
-        setPersonsResults(persons);
-      }
-    })();
-    console.log('movieResults :', movieResults);
-    console.log('seriesResults :', seriesResults);
-    console.log('personsResults :', personsResults);
-  }, [searchQuery]);
+  const onChangeSearch = (query) => setQuery(query);
 
   return (
     <Searchbar
       placeholder="Search"
       onChangeText={onChangeSearch}
-      value={searchQuery}
+      value={query}
       style={{
         elevation: 1,
         position: 'absolute',

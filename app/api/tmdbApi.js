@@ -68,8 +68,17 @@ const getNowPlaying = async () => {
 
 const multiSearch = async (query) => {
   const API_URL = `/search/multi?api_key=${API_KEY}&language=en-US&query=${query}&page=1&include_adult=false`;
-  const results = await client.get(API_URL);
-  return results;
+  const {
+    data: { results },
+  } = await client.get(API_URL);
+  const moviesResults = results.filter((item) => item.media_type === 'movie');
+  const movies = editData(moviesResults);
+
+  const seriesResults = results.filter((item) => item.media_type === 'tv');
+  const series = editData(seriesResults);
+
+  const persons = results.filter((item) => item.media_type === 'person');
+  return { movies: movies, series: series, persons: persons };
 };
 
 export default {
