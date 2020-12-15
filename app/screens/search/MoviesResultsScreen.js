@@ -9,8 +9,6 @@ const MoviesResultsScreen = () => {
   const [query, setQuery] = useContext(searchContext);
 
   const [movieResults, setMovieResults] = useState([]);
-  // const [seriesResults, setSeriesResults] = useState([]);
-  // const [personsResults, setPersonsResults] = useState([]);
 
   const theme = useTheme();
   useEffect(() => {
@@ -18,11 +16,11 @@ const MoviesResultsScreen = () => {
       if (query.length) {
         const results = await api.multiSearch(query);
         setMovieResults(results.movies);
-        // setSeriesResults(results.series);
-        // setPersonsResults(results.persons);
       }
     })();
-    console.log(movieResults);
+    return () => {
+      setMovieResults([]);
+    };
   }, [query]);
 
   return (

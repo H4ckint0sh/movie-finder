@@ -1,6 +1,8 @@
 import React from 'react';
 import { StyleSheet, View, Image } from 'react-native';
 import { Title, Paragraph, useTheme, Divider } from 'react-native-paper';
+import Genres from '../carousel/Genres';
+import Rating from '../carousel/Rating';
 
 const ResultItem = ({ item }) => {
   const theme = useTheme();
@@ -10,6 +12,8 @@ const ResultItem = ({ item }) => {
         <Image style={styles.image} source={{ uri: item.poster }} />
         <View style={styles.infoContainer}>
           <Title numberOfLines={1}>{item.title}</Title>
+          <Rating rating={item.rating} />
+          <Genres genres={item.genres} />
           <Paragraph numberOfLines={3}>{item.description}</Paragraph>
         </View>
       </View>
@@ -28,10 +32,14 @@ const styles = StyleSheet.create({
     marginVertical: 20,
   },
   image: {
-    width: 140,
-    height: 200,
+    width: 120,
+    height: 160,
+    borderRadius: 10,
   },
   infoContainer: {
-    paddingHorizontal: 20,
+    marginHorizontal: 20,
+    alignItems: 'flex-start',
+    justifyContent: 'space-between',
+    height: 160,
   },
 });
