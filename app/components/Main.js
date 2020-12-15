@@ -8,6 +8,8 @@ import { NavigationContainer } from '@react-navigation/native';
 import BottomNavigator from '../navigation/BottomTabNavigator';
 import { useColorScheme } from 'react-native-appearance';
 import PreferencesContext from '../context/preferencesContext';
+import LoginNavigation from '../navigation/LoginNavigation';
+import Firebase, { FirebaseProvider } from '../config/Firebase';
 
 const Main = () => {
   const colorScheme = useColorScheme();
@@ -32,25 +34,27 @@ const Main = () => {
   );
 
   return (
-    <PreferencesContext.Provider value={preferences}>
-      <PaperProvider
-        theme={
-          theme === 'light'
-            ? {
-                ...DefaultTheme,
-                colors: { ...DefaultTheme.colors, primary: `${color}` },
-              }
-            : {
-                ...DarkTheme,
-                colors: { ...DarkTheme.colors, primary: `${color}` },
-              }
-        }
-      >
-        <NavigationContainer>
-          <BottomNavigator />
-        </NavigationContainer>
-      </PaperProvider>
-    </PreferencesContext.Provider>
+    <FirebaseProvider value={Firebase}>
+      <PreferencesContext.Provider value={preferences}>
+        <PaperProvider
+          theme={
+            theme === 'light'
+              ? {
+                  ...DefaultTheme,
+                  colors: { ...DefaultTheme.colors, primary: '#1ba1f2' },
+                }
+              : {
+                  ...DarkTheme,
+                  colors: { ...DarkTheme.colors, primary: '#1ba1f2' },
+                }
+          }
+        >
+          <NavigationContainer>
+            <LoginNavigation />
+          </NavigationContainer>
+        </PaperProvider>
+      </PreferencesContext.Provider>
+    </FirebaseProvider>
   );
 };
 
