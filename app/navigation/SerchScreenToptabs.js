@@ -6,7 +6,7 @@ import Animated from 'react-native-reanimated';
 import Movies from '../screens/search/MoviesResultsScreen';
 import Series from '../screens/search/SeriesResultsScreen';
 import Persons from '../screens/search/PersonsResultsScreen';
-import Search from '../components/Searchbar';
+import Search from '../components/search/Searchbar';
 
 function CustomTabbar({ state, descriptors, navigation, position }) {
   const theme = useTheme();
@@ -22,6 +22,7 @@ function CustomTabbar({ state, descriptors, navigation, position }) {
       }}
     >
       <StatusBar style="light" />
+      <Search />
       {state.routes.map((route, index) => {
         const { options } = descriptors[route.key];
         const label =

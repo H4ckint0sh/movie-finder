@@ -1,9 +1,11 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
+import { useTheme, Text } from 'react-native-paper';
 
 const SeriesResultsScreen = () => {
+  const theme = useTheme();
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, { backgroundColor: theme.colors.surface }]}>
       <Text>Series</Text>
     </View>
   );

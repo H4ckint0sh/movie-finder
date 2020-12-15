@@ -1,13 +1,13 @@
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import { useTheme, Text } from 'react-native-paper';
-import Search from '../../components/Searchbar';
+import Search from '../../components/search/Searchbar';
 
 const MoviesResultsScreen = () => {
   const theme = useTheme();
   return (
     <View style={[styles.container, { backgroundColor: theme.colors.surface }]}>
-      <Search />
+      {/* <Search /> */}
       <Text>Movies</Text>
     </View>
   );
