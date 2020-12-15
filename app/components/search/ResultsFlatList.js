@@ -8,7 +8,7 @@ const ResultsFlatList = ({ data }) => {
       {data && (
         <FlatList
           data={data}
-          keyExtractor={(item) => item.id}
+          keyExtractor={(item) => `item-${item.key}`}
           renderItem={({ item }) => <ResultItem item={item} />}
         />
       )}

@@ -17,7 +17,6 @@ const PersonsResultsScreen = () => {
         setPersonsResults(results.series);
       }
     })();
-    console.log(personsResults);
     return () => {
       setPersonsResults([]);
     };
