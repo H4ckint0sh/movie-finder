@@ -15,9 +15,10 @@ import {
   Checkbox,
   IconButton,
 } from 'react-native-paper';
+import { withFirebaseHOC } from '../../config/Firebase';
 import PreferencesContext from '../../context/preferencesContext';
 
-const ProfileScreen = () => {
+const ProfileScreen = ({ firebase, navigation }) => {
   const paperTheme = useTheme();
   const { theme, toggleTheme } = useContext(PreferencesContext);
   const { setPrimaryColor } = useContext(PreferencesContext);
@@ -29,6 +30,14 @@ const ProfileScreen = () => {
   const showDialog = () => setVisible(true);
   const hideDialog = () => setVisible(false);
 
+  const handleSignOut = async () => {
+    try {
+      await firebase.signOut();
+      navigation.navigate('Welcome');
+    } catch (error) {
+      console.log(error);
+    }
+  };
   const styles = StyleSheet.create({
     container: {
       flex: 1,
@@ -76,7 +85,7 @@ const ProfileScreen = () => {
           icon="exit-to-app"
           color={paperTheme.colors.notification}
           size={30}
-          onPress={() => console.log('Logged Out')}
+          onPress={handleSignOut}
         />
       </View>
       <View style={styles.ratingContainer}>
@@ -212,4 +221,4 @@ const ProfileScreen = () => {
   );
 };
 
-export default ProfileScreen;
+export default withFirebaseHOC(ProfileScreen);
