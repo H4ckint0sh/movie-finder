@@ -15,7 +15,7 @@ const validateSchema = Yup.object().shape({
   password: Yup.string().required('Password is required'),
 });
 
-const RegisterScreen = (props, { navigation }) => {
+const RegisterScreen = ({ navigation, firebase }) => {
   const theme = useTheme();
   const styles = StyleSheet.create({
     movieLogo: {
@@ -78,20 +78,23 @@ const RegisterScreen = (props, { navigation }) => {
     },
   });
 
-  const handleOnSignup = async (values) => {
+  const handleOnSignup = async (values, actions) => {
     const { name, email, password } = values;
 
     try {
-      const response = await props.firebase.signupWithEmail(email, password);
+      const response = await firebase.signupWithEmail(email, password);
 
       if (response.user.uid) {
         const { uid } = response.user;
         const userData = { email, name, uid };
-        await props.firebase.createNewUser(userData);
-        props.navigation.navigate('BottomTabs');
+        await firebase.createNewUser(userData);
+        navigation.navigate('BottomTabs');
       }
     } catch (error) {
       console.error(error);
+      actions.setFieldError('general', error.message);
+    } finally {
+      actions.setSubmitting(false);
     }
   };
 
@@ -117,22 +120,24 @@ const RegisterScreen = (props, { navigation }) => {
           <Formik
             initialValues={{
               name: '',
-              lastname: '',
               email: '',
               password: '',
               confirmPassword: '',
             }}
-            onSubmit={(values) => {
-              handleOnSignup(values);
+            onSubmit={(values, actions) => {
+              handleOnSignup(values, actions);
             }}
             validationSchema={validateSchema}
           >
             {({
+              values,
               handleChange,
               handleSubmit,
               errors,
               setFieldTouched,
               touched,
+              isValid,
+              isSubmitting,
             }) => (
               <>
                 <Title style={{ marginVertical: 20 }}>Register</Title>

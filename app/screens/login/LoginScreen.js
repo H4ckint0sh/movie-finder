@@ -6,6 +6,7 @@ import { useTheme } from '@react-navigation/native';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 import { TextInput } from 'react-native-paper';
+import { withFirebaseHOC } from '../../config/Firebase';
 
 import ErrorMessage from '../../components/ErrorMessage';
 
@@ -14,7 +15,7 @@ const validateSchema = Yup.object().shape({
   password: Yup.string().required('Password is required'),
 });
 
-const LoginScreen = ({ navigation }) => {
+const LoginScreen = ({ navigation, firebase }) => {
   const theme = useTheme();
   const styles = StyleSheet.create({
     movieLogo: {
@@ -83,6 +84,20 @@ const LoginScreen = ({ navigation }) => {
     },
   });
 
+  const handleOnLogin = async (values, actions) => {
+    const { email, password } = values;
+    try {
+      const response = await firebase.loginWithEmail(email, password);
+      if (response.user) {
+        navigation.navigate('BottomTabs');
+      }
+    } catch (error) {
+      actions.setFieldError('general', error.message);
+    } finally {
+      actions.setSubmitting(false);
+    }
+  };
+
   return (
     <View style={styles.container}>
       <ImageBackground
@@ -104,10 +119,13 @@ const LoginScreen = ({ navigation }) => {
         >
           <Formik
             initialValues={{ email: '', password: '' }}
-            onSubmit={(values) => console.log(values)}
+            onSubmit={(values, actions) => {
+              handleOnLogin(values, actions);
+            }}
             validationSchema={validateSchema}
           >
             {({
+              values,
               handleChange,
               handleSubmit,
               errors,
@@ -118,6 +136,7 @@ const LoginScreen = ({ navigation }) => {
                 <Title style={{ marginVertical: 20 }}>Sign in</Title>
                 <TextInput
                   style={styles.input}
+                  value={values.email}
                   mode="flat"
                   underlineColor="transparent"
                   left={<TextInput.Icon name="email" />}
@@ -132,6 +151,7 @@ const LoginScreen = ({ navigation }) => {
                 <ErrorMessage error={errors.email} visible={touched.email} />
                 <TextInput
                   style={[styles.input]}
+                  value={values.password}
                   mode="flat"
                   underlineColor="transparent"
                   left={<TextInput.Icon name="lock" />}
@@ -151,14 +171,14 @@ const LoginScreen = ({ navigation }) => {
                   style={styles.loginButton}
                   labelStyle={styles.label}
                   mode="contained"
-                  onPress={() => handleSubmit}
+                  onPress={handleSubmit}
                 >
                   Login
                 </Button>
                 <Button
                   style={styles.continueButton}
                   mode="contained"
-                  onPress={() => navigation.push('BottomTabs')}
+                  onPress={() => navigation.navigate('BottomTabs')}
                 >
                   Continue without signing in
                 </Button>
@@ -166,7 +186,7 @@ const LoginScreen = ({ navigation }) => {
                   Don't have an account?{' '}
                   <Text
                     style={styles.registerButton}
-                    onPress={() => navigation.push('Register')}
+                    onPress={() => navigation.navigate('Register')}
                   >
                     Register
                   </Text>
@@ -180,4 +200,4 @@ const LoginScreen = ({ navigation }) => {
   );
 };
 
-export default LoginScreen;
+export default withFirebaseHOC(LoginScreen);
