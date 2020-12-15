@@ -8,17 +8,18 @@ import * as Yup from 'yup';
 import { TextInput } from 'react-native-paper';
 
 import ErrorMessage from '../../components/ErrorMessage';
+import { withFirebaseHOC } from '../../config/Firebase';
 
 const validateSchema = Yup.object().shape({
   email: Yup.string().required('Email is required').email().label('Email'),
   password: Yup.string().required('Password is required'),
 });
 
-const LoginScreen = ({ navigation }) => {
+const RegisterScreen = (props, { navigation }) => {
   const theme = useTheme();
   const styles = StyleSheet.create({
     movieLogo: {
-      width: 130,
+      width: 150,
       height: 120,
     },
     container: {
@@ -26,12 +27,12 @@ const LoginScreen = ({ navigation }) => {
       backgroundColor: 'lightgrey',
     },
     header: {
-      flex: 0.35,
+      flex: 0.4,
       justifyContent: 'center',
       alignItems: 'center',
     },
     footer: {
-      flex: 0.65,
+      flex: 0.6,
       alignItems: 'center',
       //justifyContent: 'center',
       backgroundColor: 'white',
@@ -77,6 +78,23 @@ const LoginScreen = ({ navigation }) => {
     },
   });
 
+  const handleOnSignup = async (values) => {
+    const { name, email, password } = values;
+
+    try {
+      const response = await props.firebase.signupWithEmail(email, password);
+
+      if (response.user.uid) {
+        const { uid } = response.user;
+        const userData = { email, name, uid };
+        await props.firebase.createNewUser(userData);
+        props.navigation.navigate('BottomTabs');
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   return (
     <View style={styles.container}>
       <ImageBackground
@@ -88,7 +106,7 @@ const LoginScreen = ({ navigation }) => {
             animation="bounce"
             duration={1500}
             style={styles.movieLogo}
-            source={require('../../../assets/logo2.png')}
+            source={require('../../../assets/logo.png')}
           />
         </View>
         <Animatable.View
@@ -104,7 +122,9 @@ const LoginScreen = ({ navigation }) => {
               password: '',
               confirmPassword: '',
             }}
-            onSubmit={(values) => console.log(values)}
+            onSubmit={(values) => {
+              handleOnSignup(values);
+            }}
             validationSchema={validateSchema}
           >
             {({
@@ -124,23 +144,9 @@ const LoginScreen = ({ navigation }) => {
                   placeholder="Name"
                   autoCapitalize="none"
                   autoCorrect={false}
-                  keyboardType="text"
+                  keyboardType="default"
                   onChangeText={handleChange('name')}
                   onBlur={() => setFieldTouched('name')}
-                  textContentType="username"
-                />
-                <ErrorMessage error={errors.name} visible={touched.name} />
-                <TextInput
-                  style={styles.input}
-                  mode="flat"
-                  underlineColor="transparent"
-                  left={<TextInput.Icon name="account" />}
-                  placeholder="Lastname"
-                  autoCapitalize="none"
-                  autoCorrect={false}
-                  keyboardType="text"
-                  onChangeText={handleChange('lastname')}
-                  onBlur={() => setFieldTouched('lastname')}
                   textContentType="username"
                 />
                 <ErrorMessage error={errors.name} visible={touched.name} />
@@ -196,7 +202,7 @@ const LoginScreen = ({ navigation }) => {
                   style={styles.registerButton}
                   labelStyle={styles.label}
                   mode="contained"
-                  onPress={() => handleSubmit}
+                  onPress={handleSubmit}
                 >
                   register
                 </Button>
@@ -218,4 +224,4 @@ const LoginScreen = ({ navigation }) => {
   );
 };
 
-export default LoginScreen;
+export default withFirebaseHOC(RegisterScreen);

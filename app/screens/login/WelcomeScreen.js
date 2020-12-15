@@ -2,19 +2,17 @@ import React from 'react';
 import { StyleSheet, Text, View, Image, ImageBackground } from 'react-native';
 import * as Animatable from 'react-native-animatable';
 import { Title, Button } from 'react-native-paper';
-import { LinearGradient } from 'expo-linear-gradient';
 import { useTheme } from '@react-navigation/native';
 
 const WelcomeScreen = ({ navigation }) => {
   const theme = useTheme();
   const styles = StyleSheet.create({
     movieLogo: {
-      width: 130,
-      height: 130,
+      width: 150,
+      height: 120,
     },
     container: {
       flex: 1,
-      backgroundColor: 'lightgrey',
     },
     header: {
       flex: 0.65,
@@ -43,7 +41,10 @@ const WelcomeScreen = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <ImageBackground
-        style={{ width: '100%', flex: 1 }}
+        style={{
+          width: '100%',
+          flex: 1,
+        }}
         source={require('../../../assets/movie-background.jpg')}
       >
         <View style={styles.header}>
@@ -51,7 +52,7 @@ const WelcomeScreen = ({ navigation }) => {
             animation="bounce"
             duration={1500}
             style={styles.movieLogo}
-            source={require('../../../assets/logo2.png')}
+            source={require('../../../assets/logo.png')}
           />
         </View>
         <Animatable.View

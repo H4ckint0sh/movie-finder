@@ -33,7 +33,8 @@
     "react-native-tab-view": "^2.15.2",
     "react-native-vector-icons": "^7.1.0",
     "react-native-web": "~0.13.12",
-    "yup": "^0.32.6"
+    "yup": "^0.32.6",
+    "firebase": "7.9.0"
   },
   "devDependencies": {
     "@babel/core": "~7.9.0",

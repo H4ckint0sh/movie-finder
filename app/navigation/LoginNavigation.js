@@ -5,6 +5,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import LoginScreen from '../screens/login/LoginScreen';
 import RegisterScreen from '../screens/login/RegisterScreen';
 import WelcomeScreen from '../screens/login/WelcomeScreen';
+import SplashScreen from '../screens/login/SplashScreen';
 import BottomTabNavigator from '../navigation/BottomTabNavigator';
 
 const LoginNavigation = () => {
@@ -25,6 +26,11 @@ const LoginNavigation = () => {
         options={{ gestureEnabled: true }}
         name="Register"
         component={RegisterScreen}
+      />
+      <Stack.Screen
+        options={{ gestureEnabled: true }}
+        name="Splash"
+        component={SplashScreen}
       />
       <Stack.Screen
         options={{ gestureEnabled: false }}

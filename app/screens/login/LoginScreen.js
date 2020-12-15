@@ -18,8 +18,8 @@ const LoginScreen = ({ navigation }) => {
   const theme = useTheme();
   const styles = StyleSheet.create({
     movieLogo: {
-      width: 130,
-      height: 130,
+      width: 150,
+      height: 120,
     },
     container: {
       flex: 1,
@@ -94,7 +94,7 @@ const LoginScreen = ({ navigation }) => {
             animation="bounce"
             duration={1500}
             style={styles.movieLogo}
-            source={require('../../../assets/logo2.png')}
+            source={require('../../../assets/logo.png')}
           />
         </View>
         <Animatable.View
