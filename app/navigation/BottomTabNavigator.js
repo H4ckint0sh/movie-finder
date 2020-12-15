@@ -6,7 +6,7 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 // screens
 import Movies from '../screens/MoviesScreen';
 import Series from '../screens/SeriesScreen';
-import Search from '../screens/SearchScreen';
+import SearchScreenToptabs from '../navigation/SerchScreenToptabs';
 import Profile from '../screens/profile/ProfileScreen';
 
 import HomeScreenTopTabs from '../navigation/HomeScreenToptabs';
@@ -76,7 +76,7 @@ const BottomTabNavigator = () => {
       />
       <TabNavigator.Screen
         name="Search"
-        component={Search}
+        component={SearchScreenToptabs}
         options={{
           tabBarIcon: ({ color, focused }) => (
             <MaterialIcons
