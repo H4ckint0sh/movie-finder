@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext, useEffect } from 'react';
 import { StyleSheet, Text, View, Image, ImageBackground } from 'react-native';
 import * as Animatable from 'react-native-animatable';
 import { Title, Button } from 'react-native-paper';
@@ -7,6 +7,7 @@ import { Formik } from 'formik';
 import * as Yup from 'yup';
 import { TextInput } from 'react-native-paper';
 import { withFirebaseHOC } from '../../config/Firebase';
+import { userContext } from '../../context/userContext';
 
 import ErrorMessage from '../../components/ErrorMessage';
 
@@ -16,6 +17,7 @@ const validateSchema = Yup.object().shape({
 });
 
 const LoginScreen = ({ navigation, firebase }) => {
+  const [user, setUser] = useContext(userContext);
   const theme = useTheme();
   const styles = StyleSheet.create({
     movieLogo: {
@@ -89,6 +91,7 @@ const LoginScreen = ({ navigation, firebase }) => {
     try {
       const response = await firebase.loginWithEmail(email, password);
       if (response.user) {
+        setUser(response.user);
         navigation.navigate('BottomTabs');
       }
     } catch (error) {
