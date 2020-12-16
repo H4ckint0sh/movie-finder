@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import { StyleSheet, View, SafeAreaView } from 'react-native';
 import {
   Title,
@@ -16,12 +16,15 @@ import {
   IconButton,
 } from 'react-native-paper';
 import { withFirebaseHOC } from '../../config/Firebase';
-import PreferencesContext from '../../context/preferencesContext';
+import preferencesContext from '../../context/preferencesContext';
+import { userContext } from '../../context/userContext';
 
 const ProfileScreen = ({ firebase, navigation }) => {
   const paperTheme = useTheme();
-  const { theme, toggleTheme } = useContext(PreferencesContext);
-  const { setPrimaryColor } = useContext(PreferencesContext);
+  const [user, setUser] = useContext(userContext);
+  const { theme, toggleTheme, setPrimaryColor } = useContext(
+    preferencesContext
+  );
 
   const [isSwitchOn, setIsSwitchOn] = useState(false);
   const onToggleSwitch = () => setIsSwitchOn(!isSwitchOn);
@@ -38,6 +41,11 @@ const ProfileScreen = ({ firebase, navigation }) => {
       console.log(error);
     }
   };
+
+  useEffect(() => {
+    console.log(user);
+  }, [user]);
+
   const styles = StyleSheet.create({
     container: {
       flex: 1,
@@ -75,7 +83,7 @@ const ProfileScreen = ({ firebase, navigation }) => {
           source={{ uri: 'https://randomuser.me/api/portraits/men/45.jpg' }}
         />
         <View style={styles.nameContainer}>
-          <Title>Alijan Adeli</Title>
+          <Title>{user.displayName ? user.displayName : 'No name'}</Title>
           <Caption>@H4ckint0sh</Caption>
         </View>
         <IconButton
@@ -104,7 +112,7 @@ const ProfileScreen = ({ firebase, navigation }) => {
       </View>
       <View style={styles.infoContainer}>
         <List.Item
-          title="alijan.adeli@icloud.com"
+          title={user.email ? user.email : ''}
           left={(props) => <List.Icon {...props} icon="email-outline" />}
           right={(props) => <List.Icon {...props} icon="pencil-outline" />}
         />

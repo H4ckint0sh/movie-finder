@@ -9,7 +9,15 @@ firebase.initializeApp(firebaseConfig);
 const Firebase = {
   // auth
   loginWithEmail: (email, password) => {
-    return firebase.auth().signInWithEmailAndPassword(email, password);
+    firebase
+      .auth()
+      .setPersistence(firebase.auth.Auth.Persistence.LOCAL)
+      .then((email, password) => {
+        return firebase.auth().signInWithEmailAndPassword(email, password);
+      })
+      .catch((error) => {
+        console.log(error.message);
+      });
   },
   signupWithEmail: (email, password) => {
     return firebase.auth().createUserWithEmailAndPassword(email, password);
