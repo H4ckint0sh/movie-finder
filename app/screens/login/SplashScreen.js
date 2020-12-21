@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { StyleSheet, Text, View, ActivityIndicator, Image } from 'react-native';
 import { useTheme } from '@react-navigation/native';
-// import firebase from 'firebase';
+import firebase from 'firebase';
 
 const SplashScreen = ({ navigation }) => {
   const theme = useTheme();
@@ -19,10 +19,10 @@ const SplashScreen = ({ navigation }) => {
   });
 
   useEffect(() => {
-    //checkIfLoggedIn();
+    // checkIfLoggedIn();
   }, []);
 
-  // const checkIfLoggedIn = () => {
+  // const checkIfLoggedIn = ({ navigation }) => {
   //   firebase.auth().onAuthStateChanged((user) => {
   //     if (user) {
   //       navigation.navigate('BottomTabs');

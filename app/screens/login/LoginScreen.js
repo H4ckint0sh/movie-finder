@@ -1,8 +1,7 @@
 import React from 'react';
 import { StyleSheet, Text, View, Image, ImageBackground } from 'react-native';
 import * as Animatable from 'react-native-animatable';
-import { Title, Button } from 'react-native-paper';
-import { useTheme } from '@react-navigation/native';
+import { Title, Button, useTheme } from 'react-native-paper';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 import { TextInput } from 'react-native-paper';
@@ -24,7 +23,7 @@ const LoginScreen = ({ navigation, firebase }) => {
     },
     container: {
       flex: 1,
-      backgroundColor: 'lightgrey',
+      backgroundColor: theme.colors.surface,
     },
     header: {
       flex: 0.5,
@@ -34,7 +33,9 @@ const LoginScreen = ({ navigation, firebase }) => {
     footer: {
       flex: 0.5,
       alignItems: 'center',
-      backgroundColor: 'white',
+      backgroundColor: theme.colors.surface,
+      borderColor: theme.colors.disabled,
+      borderWidth: 1,
       borderTopStartRadius: 50,
       borderTopEndRadius: 50,
     },
