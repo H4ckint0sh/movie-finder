@@ -1,9 +1,9 @@
-import React, { useContext, useState, useRef } from 'react';
+import React, { useContext, useState, useRef, useEffect } from 'react';
 import {
   StyleSheet,
   View,
   SafeAreaView,
-  KeyboardAvoidingView,
+  Platform,
   TextInput,
 } from 'react-native';
 import {
@@ -23,18 +23,17 @@ import {
   Headline,
   Subheading,
 } from 'react-native-paper';
+import BottomSheetComp from '../../components/profile/BottomSheet';
 import Firebase, { withFirebaseHOC } from '../../config/Firebase';
 import preferencesContext from '../../context/preferencesContext';
 import { userContext } from '../../context/userContext';
-import BottomSheet from 'reanimated-bottom-sheet';
 
-const ProfileScreen = ({ firebase, navigation }) => {
+const ProfileScreen = ({ navigation }) => {
   const paperTheme = useTheme();
   const [user, setUser] = useContext(userContext);
   const { theme, toggleTheme, setPrimaryColor } = useContext(
     preferencesContext
   );
-
   const bs = useRef(null);
 
   const [isSwitchOn, setIsSwitchOn] = useState(false);
@@ -49,6 +48,8 @@ const ProfileScreen = ({ firebase, navigation }) => {
   const [showPasswordEdit, setShowPasswordEdit] = useState(false);
   const [password, setPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
+
+  const [image, setImage] = useState(null);
 
   const handleSignOut = () => {
     try {
@@ -79,49 +80,6 @@ const ProfileScreen = ({ firebase, navigation }) => {
     setPassword('');
     setNewPassword('');
     setShowPasswordEdit(false);
-  };
-
-  const renderContent = () => {
-    return (
-      <View style={styles.bottomSheet}>
-        <Button
-          color={`${paperTheme.colors.primary}`}
-          mode="contained"
-          icon="camera"
-          style={styles.button}
-          labelStyle={{ color: 'white' }}
-        >
-          Take a photo
-        </Button>
-        <Button
-          color={`${paperTheme.colors.primary}`}
-          icon="image-search"
-          mode="contained"
-          style={styles.button}
-          labelStyle={{ color: 'white' }}
-        >
-          Choose a photo from library
-        </Button>
-        <Button
-          color={`${paperTheme.colors.primary}`}
-          mode="contained"
-          onPress={() => bs.current.snapTo(1)}
-          style={styles.button}
-          labelStyle={{ color: 'white' }}
-        >
-          cancel
-        </Button>
-      </View>
-    );
-  };
-  const renderHeader = () => {
-    return (
-      <View style={styles.header}>
-        <View style={styles.panelHeader}>
-          <View style={styles.panelHandle} />
-        </View>
-      </View>
-    );
   };
 
   const styles = StyleSheet.create({
@@ -174,52 +132,19 @@ const ProfileScreen = ({ firebase, navigation }) => {
       marginTop: 10,
       borderRadius: 25,
     },
-    bottomSheet: {
-      height: 200,
-      backgroundColor: paperTheme.colors.surface,
-      padding: 16,
-      height: 450,
-      alignItems: 'center',
-    },
-    button: {
-      width: '90%',
-      backgroundColor: paperTheme.colors.primary,
-      marginBottom: 10,
-      borderRadius: 35,
-    },
-    header: {
-      backgroundColor: paperTheme.colors.surface,
-      shadowColor: paperTheme.colors.disabled,
-      paddingTop: 20,
-      borderTopColor: paperTheme.colors.disabled,
-      borderTopWidth: 2,
-    },
-    panelHeader: {
-      alignItems: 'center',
-    },
-    panelHandle: {
-      width: 60,
-      height: 6,
-      borderRadius: 4,
-      backgroundColor: paperTheme.colors.disabled,
-      marginBottom: 10,
-    },
   });
   return (
     <View style={styles.container}>
-      <BottomSheet
-        ref={bs}
-        snapPoints={[200, 0]}
-        initialSnap={1}
-        renderContent={renderContent}
-        renderHeader={renderHeader}
-        enabledGestureInteraction={true}
-      />
+      <BottomSheetComp setImage={setImage} bs={bs} />
       <View style={styles.profileContainer}>
         <Avatar.Image
           style={styles.avatar}
           size={80}
-          source={{ uri: 'https://randomuser.me/api/portraits/men/45.jpg' }}
+          source={{
+            uri: image
+              ? image
+              : 'https://randomuser.me/api/portraits/men/45.jpg',
+          }}
         />
         <IconButton
           style={{

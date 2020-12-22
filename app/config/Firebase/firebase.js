@@ -1,6 +1,7 @@
 import * as firebase from 'firebase';
 import 'firebase/auth';
 import 'firebase/firestore';
+import 'firebase/storage';
 import { Alert } from 'react-native';
 import firebaseConfig from './firebaseConfig';
 
