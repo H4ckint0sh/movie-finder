@@ -2,8 +2,6 @@ import React, { useContext, useState, useRef, useEffect } from 'react';
 import {
   StyleSheet,
   View,
-  SafeAreaView,
-  Platform,
   TextInput,
 } from 'react-native';
 import {
@@ -16,14 +14,10 @@ import {
   Text,
   Divider,
   List,
-  Portal,
-  Dialog,
-  Checkbox,
   IconButton,
-  Headline,
-  Subheading,
 } from 'react-native-paper';
 import BottomSheetComp from '../../components/profile/BottomSheet';
+import PrimaryColor from '../../components/profile/PrimaryColor';
 import Firebase, { withFirebaseHOC } from '../../config/Firebase';
 import preferencesContext from '../../context/preferencesContext';
 import { userContext } from '../../context/userContext';
@@ -33,22 +27,24 @@ const ProfileScreen = ({ navigation }) => {
   const [user, setUser] = useContext(userContext);
   const { theme, toggleTheme, setPrimaryColor } = useContext(
     preferencesContext
-  );
+	);
+	
+	// bottomsheet refrense
   const bs = useRef(null);
 
   const [isSwitchOn, setIsSwitchOn] = useState(false);
   const onToggleSwitch = () => setIsSwitchOn(!isSwitchOn);
 
+	// visability of peimarycolor dialog
   const [visible, setVisible] = useState(false);
-  const showDialog = () => setVisible(true);
-  const hideDialog = () => setVisible(false);
 
   const [newEmail, setNewEmail] = useState('');
   const [showEmailEdit, setShowEmailEdit] = useState(false);
   const [showPasswordEdit, setShowPasswordEdit] = useState(false);
   const [password, setPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
-
+	
+	// uploaded image
   const [image, setImage] = useState(null);
 
   const handleSignOut = () => {
@@ -141,8 +137,8 @@ const ProfileScreen = ({ navigation }) => {
           style={styles.avatar}
           size={80}
           source={{
-            uri: image
-              ? image
+            uri: user.photoURL
+              ? user.photoURL
               : 'https://randomuser.me/api/portraits/men/45.jpg',
           }}
         />
@@ -269,88 +265,7 @@ const ProfileScreen = ({ navigation }) => {
         )}
       </View>
       <Divider />
-      <List.Item
-        title="Primary Color"
-        right={(props) => (
-          <>
-            <Button onPress={showDialog}>Set</Button>
-            <Portal>
-              <Dialog
-                style={{ borderRadius: 20 }}
-                visible={visible}
-                onDismiss={hideDialog}
-              >
-                <Dialog.Title>Choose a primary color</Dialog.Title>
-                <Dialog.Content>
-                  <List.Item
-                    left={(props) => (
-                      <List.Icon
-                        {...props}
-                        color="#1ba1f2"
-                        icon="format-color-fill"
-                      />
-                    )}
-                    right={(props) => (
-                      <Checkbox.Android
-                        onPress={() => setPrimaryColor('#1ba1f2')}
-                        color="#1ba1f2"
-                        status={
-                          paperTheme.colors.primary === '#1ba1f2'
-                            ? 'checked'
-                            : 'unchecked'
-                        }
-                      />
-                    )}
-                  />
-                  <List.Item
-                    left={(props) => (
-                      <List.Icon
-                        {...props}
-                        color="#FB950A"
-                        icon="format-color-fill"
-                      />
-                    )}
-                    right={(props) => (
-                      <Checkbox.Android
-                        onPress={() => setPrimaryColor('#FB950A')}
-                        status={
-                          paperTheme.colors.primary === '#FB950A'
-                            ? 'checked'
-                            : 'unchecked'
-                        }
-                        color="#FB950A"
-                      />
-                    )}
-                  />
-                  <List.Item
-                    left={(props) => (
-                      <List.Icon
-                        {...props}
-                        color="#FF05C1"
-                        icon="format-color-fill"
-                      />
-                    )}
-                    right={(props) => (
-                      <Checkbox.Android
-                        onPress={() => setPrimaryColor('#FF05C1')}
-                        status={
-                          paperTheme.colors.primary === '#FF05C1'
-                            ? 'checked'
-                            : 'unchecked'
-                        }
-                        color="#FF05C1"
-                      />
-                    )}
-                  />
-                </Dialog.Content>
-                <Dialog.Actions>
-                  <Button onPress={hideDialog}>close</Button>
-                </Dialog.Actions>
-              </Dialog>
-            </Portal>
-          </>
-        )}
-      />
+			<PrimaryColor setPrimaryColor={setPrimaryColor} visible={visible} setVisible={setVisible}/>
       <Divider />
       <List.Item
         title="Light Theme"

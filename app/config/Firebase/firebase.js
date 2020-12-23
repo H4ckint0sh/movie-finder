@@ -49,14 +49,11 @@ const Firebase = {
     const usersRef = firebase.firestore().collection('users');
   },
 
-  updateProfile: () => {
+  updateProfile: (update) => {
     var user = firebase.auth().currentUser;
 
     user
-      .updateProfile({
-        displayName: 'Jane Q. User',
-        photoURL: 'https://example.com/jane-q-user/profile.jpg',
-      })
+      .updateProfile(update)
       .then(function () {
         alert('success');
       })

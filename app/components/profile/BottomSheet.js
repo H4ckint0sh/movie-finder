@@ -5,6 +5,7 @@ import { useTheme, Button } from 'react-native-paper';
 import * as ImagePicker from 'expo-image-picker';
 import * as firebase from 'firebase';
 import 'firebase/storage';
+import Firebase from '../../config/Firebase'
 
 const BottomSheetComp = ({ setImage, bs }) => {
   const theme = useTheme();
@@ -66,7 +67,6 @@ const BottomSheetComp = ({ setImage, bs }) => {
 
     if (!result.cancelled) {
       uploadImage(result.uri, 'test-image');
-      // setImage(result.uri);
     }
   };
 
@@ -74,13 +74,17 @@ const BottomSheetComp = ({ setImage, bs }) => {
     const response = await fetch(uri);
     const blob = await response.blob();
 
+		// const {uid} = firebase.auth().currentUser;
+		// console.log(uid);
     const ref = firebase.storage().ref().child(`images/${imageName}`);
     await ref.put(blob);
 
     ref
       .getDownloadURL()
       .then(function (url) {
-        setImage(url);
+				// setImage(url);
+				const update = {photoURL: url};
+				Firebase.updateProfile(update);
       })
       .catch(function (error) {
         switch (error.code) {
