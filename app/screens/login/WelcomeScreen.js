@@ -1,8 +1,9 @@
 import React from 'react';
 import { StyleSheet, Text, View, Image, ImageBackground } from 'react-native';
 import * as Animatable from 'react-native-animatable';
-import { Title, Button } from 'react-native-paper';
-import { useTheme } from '@react-navigation/native';
+import { Title, Button, useTheme } from 'react-native-paper';
+import * as Google from 'expo-google-app-auth';
+import firebase from 'firebase';
 
 const WelcomeScreen = ({ navigation }) => {
   const theme = useTheme();
@@ -13,16 +14,19 @@ const WelcomeScreen = ({ navigation }) => {
     },
     container: {
       flex: 1,
+      backgroundColor: theme.colors.surface,
     },
     header: {
-      flex: 0.65,
+      flex: 0.6,
       justifyContent: 'center',
       alignItems: 'center',
     },
     footer: {
-      flex: 0.35,
+      flex: 0.4,
       alignItems: 'center',
-      backgroundColor: 'white',
+      backgroundColor: theme.colors.surface,
+      borderColor: theme.colors.disabled,
+      borderWidth: 1,
       borderTopStartRadius: 50,
       borderTopEndRadius: 50,
     },
@@ -37,56 +41,138 @@ const WelcomeScreen = ({ navigation }) => {
       fontSize: 16,
     },
   });
+  const isUserEqual = (googleUser, firebaseUser) => {
+    if (firebaseUser) {
+      var providerData = firebaseUser.providerData;
+      for (var i = 0; i < providerData.length; i++) {
+        if (
+          providerData[i].providerId ===
+            firebase.auth.GoogleAuthProvider.PROVIDER_ID &&
+          providerData[i].uid === googleUser.getBasicProfile().getId()
+        ) {
+          // We don't need to reauth the Firebase connection.
+          return true;
+        }
+      }
+    }
+    return false;
+  };
+  const onSignIn = (googleUser) => {
+    console.log('Google Auth Response', googleUser);
+    // We need to register an Observer on Firebase Auth to make sure auth is initialized.
+    var unsubscribe = firebase.auth().onAuthStateChanged((firebaseUser) => {
+      unsubscribe();
+      // Check if we are already signed-in Firebase with the correct user.
+      if (!isUserEqual(googleUser, firebaseUser)) {
+        // Build Firebase credential with the Google ID token.
+        var credential = firebase.auth.GoogleAuthProvider.credential(
+          googleUser.idToken,
+          googleUser.accessToken
+        );
 
+        // Sign in with credential from the Google user.
+        firebase
+          .auth()
+          .signInWithCredential(credential)
+          .then((result) => {
+            console.log('user signed in');
+            firebase
+              .database()
+              .ref('/users/' + result.user.uid)
+              .set({
+                gmail: result.user.email,
+                profile_picture: result.additionalUserInfo.profile.picture,
+                locale: result.additionalUserInfo.profile.locale,
+                first_name: result.additionalUserInfo.profile.given_name,
+                last_name: result.additionalUserInfo.profile.family_name,
+              })
+              .then((snapshot) => {
+                console.log('Snapshot', snapshot);
+                navigation.navigate('BottomTabs');
+              });
+          })
+          .catch((error) => {
+            // Handle Errors here.
+            var errorCode = error.code;
+            var errorMessage = error.message;
+            // The email of the user's account used.
+            var email = error.email;
+            // The firebase.auth.AuthCredential type that was used.
+            var credential = error.credential;
+            // ...
+          });
+      } else {
+        console.log('User already signed-in Firebase.');
+      }
+    });
+  };
+  const signInWithGoogleAsync = async () => {
+    try {
+      const result = await Google.logInAsync({
+        //androidClientId: YOUR_CLIENT_ID_HERE,
+        iosClientId:
+          '868124637531-gbkp2v1utv18s49v6m9q4pac7s2aqbsc.apps.googleusercontent.com',
+        scopes: ['profile', 'email'],
+      });
+      if (result.type === 'success') {
+        onSignIn(result);
+        return result.accessToken;
+      } else {
+        return { cancelled: true };
+      }
+    } catch (e) {
+      return { error: true };
+    }
+  };
   return (
     <View style={styles.container}>
-      <ImageBackground
-        style={{
-          width: '100%',
-          flex: 1,
-        }}
-        source={require('../../../assets/movie-background.jpg')}
+      <View style={styles.header}>
+        <Animatable.Image
+          animation="bounce"
+          duration={1500}
+          style={styles.movieLogo}
+          source={require('../../../assets/logo.png')}
+        />
+      </View>
+      <Animatable.View
+        style={styles.footer}
+        animation="slideInUp"
+        duration={1000}
       >
-        <View style={styles.header}>
-          <Animatable.Image
-            animation="bounce"
-            duration={1500}
-            style={styles.movieLogo}
-            source={require('../../../assets/logo.png')}
-          />
-        </View>
-        <Animatable.View
-          style={styles.footer}
-          animation="slideInUp"
-          duration={1000}
-        >
-          <Title style={{ marginVertical: 20 }}>Find the movies you want</Title>
+        <Title style={{ marginVertical: 20 }}>Find the movies you want</Title>
 
-          <Button
-            labelStyle={styles.label}
-            style={styles.button}
-            mode="contained"
-            onPress={() => navigation.navigate('Login')}
-          >
-            Sign In
-          </Button>
-          <Button
-            style={[styles.button]}
-            labelStyle={styles.label}
-            mode="contained"
-            onPress={() => navigation.navigate('Register')}
-          >
-            Register
-          </Button>
-          <Button
-            style={[styles.button, { backgroundColor: 'lightgrey' }]}
-            mode="contained"
-            onPress={() => navigation.navigate('BottomTabs')}
-          >
-            Continue without signing in{' '}
-          </Button>
-        </Animatable.View>
-      </ImageBackground>
+        <Button
+          labelStyle={styles.label}
+          style={styles.button}
+          mode="contained"
+          onPress={() => navigation.navigate('Login')}
+        >
+          Sign In
+        </Button>
+        <Button
+          style={[styles.button]}
+          labelStyle={styles.label}
+          mode="contained"
+          onPress={() => navigation.navigate('Register')}
+        >
+          Register
+        </Button>
+        <Button
+          style={[styles.button]}
+          labelStyle={styles.label}
+          mode="contained"
+          onPress={() => signInWithGoogleAsync()}
+        >
+          Sign in with google
+        </Button>
+        <Button
+          style={[styles.button, { backgroundColor: 'lightgrey' }]}
+          mode="contained"
+          onPress={() => navigation.navigate('BottomTabs')}
+        >
+          Continue without signing in{' '}
+        </Button>
+      </Animatable.View>
     </View>
   );
 };
