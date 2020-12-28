@@ -11,18 +11,6 @@ if (!firebase.apps.length) {
 }
 
 const Firebase = {
-  // auth
-  // loginWithEmail: (email, password) => {
-  //   firebase
-  //     .auth()
-  //     .setPersistence(firebase.auth.Auth.Persistence.LOCAL)
-  //     .then(() => {
-  //       return firebase.auth().signInWithEmailAndPassword(email, password);
-  //     })
-  //     .catch((error) => {
-  //       console.log(error.message);
-  //     });
-  // },
   loginWithEmail: (email, password) => {
     return firebase.auth().signInWithEmailAndPassword(email, password);
   },

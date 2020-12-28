@@ -14,6 +14,7 @@ import { TextInput } from 'react-native-paper';
 
 import ErrorMessage from '../../components/ErrorMessage';
 import { withFirebaseHOC } from '../../config/Firebase';
+import { ScrollView } from 'react-native-gesture-handler';
 
 const validateSchema = Yup.object().shape({
   email: Yup.string().required('Email is required').email().label('Email'),
@@ -147,88 +148,104 @@ const RegisterScreen = ({ navigation, firebase }) => {
             isValid,
             isSubmitting,
           }) => (
-            <>
+            <View
+              style={{
+                width: '100%',
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}
+            >
               <Title style={{ marginVertical: 20 }}>Register</Title>
-              <TextInput
-                style={styles.input}
-                mode="flat"
-                underlineColor="transparent"
-                left={<TextInput.Icon name="account" />}
-                placeholder="Name"
-                autoCapitalize="none"
-                autoCorrect={false}
-                keyboardType="default"
-                onChangeText={handleChange('name')}
-                onBlur={() => setFieldTouched('name')}
-                textContentType="username"
-              />
-              <ErrorMessage error={errors.name} visible={touched.name} />
-              <TextInput
-                style={styles.input}
-                mode="flat"
-                underlineColor="transparent"
-                left={<TextInput.Icon name="email" />}
-                placeholder="Email"
-                autoCapitalize="none"
-                autoCorrect={false}
-                keyboardType="email-address"
-                onChangeText={handleChange('email')}
-                onBlur={() => setFieldTouched('email')}
-                textContentType="emailAddress"
-              />
-              <ErrorMessage error={errors.email} visible={touched.email} />
-              <TextInput
-                style={[styles.input]}
-                mode="flat"
-                underlineColor="transparent"
-                left={<TextInput.Icon name="lock" />}
-                placeholder="Password"
-                autoCapitalize="none"
-                autoCorrect={false}
-                textContentType="password"
-                onChangeText={handleChange('password')}
-                onBlur={() => setFieldTouched('password')}
-                secureTextEntry={true}
-              />
-              <ErrorMessage
-                error={errors.password}
-                visible={touched.password}
-              />
-              <TextInput
-                style={[styles.input]}
-                mode="flat"
-                underlineColor="transparent"
-                left={<TextInput.Icon name="lock" />}
-                placeholder="Confirm password"
-                autoCapitalize="none"
-                autoCorrect={false}
-                textContentType="password"
-                onChangeText={handleChange('confirmPassword')}
-                onBlur={() => setFieldTouched('confirmPassword')}
-                secureTextEntry={true}
-              />
-              <ErrorMessage
-                error={errors.confirmPassword}
-                visible={touched.confirmPassword}
-              />
-              <Button
-                style={styles.registerButton}
-                labelStyle={styles.label}
-                mode="contained"
-                onPress={handleSubmit}
+              <ScrollView
+                style={{
+                  width: '100%',
+                }}
+                contentContainerStyle={{
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                }}
               >
-                register
-              </Button>
-              <Text style={styles.register}>
-                Already have an account?{' '}
-                <Text
-                  style={styles.signIn}
-                  onPress={() => navigation.push('Login')}
+                <TextInput
+                  style={styles.input}
+                  mode="flat"
+                  underlineColor="transparent"
+                  left={<TextInput.Icon name="account" />}
+                  placeholder="Name"
+                  autoCapitalize="none"
+                  autoCorrect={false}
+                  keyboardType="default"
+                  onChangeText={handleChange('name')}
+                  onBlur={() => setFieldTouched('name')}
+                  textContentType="username"
+                />
+                <ErrorMessage error={errors.name} visible={touched.name} />
+                <TextInput
+                  style={styles.input}
+                  mode="flat"
+                  underlineColor="transparent"
+                  left={<TextInput.Icon name="email" />}
+                  placeholder="Email"
+                  autoCapitalize="none"
+                  autoCorrect={false}
+                  keyboardType="email-address"
+                  onChangeText={handleChange('email')}
+                  onBlur={() => setFieldTouched('email')}
+                  textContentType="emailAddress"
+                />
+                <ErrorMessage error={errors.email} visible={touched.email} />
+                <TextInput
+                  style={[styles.input]}
+                  mode="flat"
+                  underlineColor="transparent"
+                  left={<TextInput.Icon name="lock" />}
+                  placeholder="Password"
+                  autoCapitalize="none"
+                  autoCorrect={false}
+                  textContentType="password"
+                  onChangeText={handleChange('password')}
+                  onBlur={() => setFieldTouched('password')}
+                  secureTextEntry={true}
+                />
+                <ErrorMessage
+                  error={errors.password}
+                  visible={touched.password}
+                />
+                <TextInput
+                  style={[styles.input]}
+                  mode="flat"
+                  underlineColor="transparent"
+                  left={<TextInput.Icon name="lock" />}
+                  placeholder="Confirm password"
+                  autoCapitalize="none"
+                  autoCorrect={false}
+                  textContentType="password"
+                  onChangeText={handleChange('confirmPassword')}
+                  onBlur={() => setFieldTouched('confirmPassword')}
+                  secureTextEntry={true}
+                />
+                <ErrorMessage
+                  error={errors.confirmPassword}
+                  visible={touched.confirmPassword}
+                />
+                <Button
+                  style={styles.registerButton}
+                  labelStyle={styles.label}
+                  mode="contained"
+                  onPress={handleSubmit}
                 >
-                  Sign in
+                  register
+                </Button>
+                <Text style={styles.register}>
+                  Already have an account?{' '}
+                  <Text
+                    style={styles.signIn}
+                    onPress={() => navigation.push('Login')}
+                  >
+                    Sign in
+                  </Text>
                 </Text>
-              </Text>
-            </>
+              </ScrollView>
+            </View>
           )}
         </Formik>
       </Animatable.View>

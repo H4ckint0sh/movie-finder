@@ -11,9 +11,11 @@ const ResultItem = ({ item }) => {
       <View style={styles.container}>
         <Image style={styles.image} source={{ uri: item.poster }} />
         <View style={styles.infoContainer}>
-          <Title numberOfLines={1}>{item.title}</Title>
-          <Rating rating={item.rating} />
-          <Genres genres={item.genres} />
+          <Title style={styles.title} numberOfLines={1}>
+            {item.title}
+          </Title>
+          {item.rating ? <Rating rating={item.rating} /> : null}
+          {item.genres ? <Genres genres={item.genres} /> : null}
           <Paragraph numberOfLines={3}>{item.description}</Paragraph>
         </View>
       </View>
@@ -30,6 +32,9 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     marginVertical: 20,
+  },
+  title: {
+    fontSize: 16,
   },
   image: {
     width: 120,

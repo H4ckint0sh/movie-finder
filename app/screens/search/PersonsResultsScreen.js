@@ -14,7 +14,7 @@ const PersonsResultsScreen = () => {
     (async () => {
       if (query.length) {
         const results = await api.multiSearch(query);
-        setPersonsResults(results.series);
+        setPersonsResults(results.persons);
       }
     })();
     return () => {
