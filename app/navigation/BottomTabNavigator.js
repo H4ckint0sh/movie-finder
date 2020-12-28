@@ -4,8 +4,8 @@ import { useTheme } from 'react-native-paper';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
 // screens
-import Movies from '../screens/MoviesScreen';
-import Series from '../screens/SeriesScreen';
+import MoviesAll from '../screens/MoviesAll';
+import SeriesAll from '../screens/SeriesAll';
 import SearchScreenToptabs from '../navigation/SerchScreenToptabs';
 import Profile from '../screens/profile/ProfileScreen';
 
@@ -44,7 +44,7 @@ const BottomTabNavigator = () => {
       />
       <TabNavigator.Screen
         name="Movies"
-        component={Movies}
+        component={MoviesAll}
         options={{
           tabBarIcon: ({ color, focused }) => (
             <MaterialIcons
@@ -60,7 +60,7 @@ const BottomTabNavigator = () => {
       />
       <TabNavigator.Screen
         name="Series"
-        component={Series}
+        component={SeriesAll}
         options={{
           tabBarIcon: ({ color, focused }) => (
             <MaterialIcons

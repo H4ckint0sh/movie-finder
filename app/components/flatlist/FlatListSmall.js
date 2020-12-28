@@ -1,14 +1,16 @@
 import React from 'react';
 import { StyleSheet, Dimensions, View, FlatList } from 'react-native';
-import { Card, Headline, Title, Paragraph } from 'react-native-paper';
+import { Card, Headline, Title, Paragraph, Text } from 'react-native-paper';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
 
 const { width, height } = Dimensions.get('screen');
 
-const ITEM_WIDTH = width * 0.4;
-const ITEM_HEIGHT = ITEM_WIDTH * 1.2;
+const ITEM_WIDTH = width * 0.7;
+const ITEM_HEIGHT = ITEM_WIDTH * 1;
 const SPACE = (width - ITEM_WIDTH) / 2;
 
-const FlatListSmall = ({ data, heading }) => {
+const FlatListSmall = ({ navigation, data, heading }) => {
   return (
     <View style={styles.container}>
       <Headline style={styles.headline}>{heading}</Headline>
@@ -29,20 +31,23 @@ const FlatListSmall = ({ data, heading }) => {
           return (
             <Card
               style={{
-                width: ITEM_WIDTH,
-                height: ITEM_HEIGHT * 2,
+                width: 150,
+                height: 200,
                 marginRight: 15,
+                borderRadius: 10
               }}
+              onPress={() => navigation.navigate('SingleMovie', {item, heading})}
             >
               <Card.Cover
                 source={{
                   uri: item.poster,
                 }}
+                style={{
+                  width: 150,
+                  height: 200,
+                  borderRadius: 10
+                }}
               />
-              <Card.Content>
-                <Title numberOfLines={1}>{item.title}</Title>
-                <Paragraph numberOfLines={2}>{item.description}</Paragraph>
-              </Card.Content>
             </Card>
           );
         }}

@@ -1,24 +1,36 @@
-import React from 'react';
-import { StyleSheet, View } from 'react-native';
-import { Title, useTheme } from 'react-native-paper';
+import React, { useEffect, useState } from 'react';
+import {SafeAreaView,} from 'react-native';
+import { ScrollView } from 'react-native-gesture-handler';
+import { useTheme, Button } from 'react-native-paper';
+import api from '../api/tmdbApi';
+import FlatListSmallTV from '../components/flatlist/FlatListSmallTV';
 
-const SeriesScreen = () => {
+const SeriesScreen = ({ navigation }) => {
   const theme = useTheme();
-  const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      justifyContent: 'center',
-      alignItems: 'center',
-      backgroundColor: theme.colors.surface,
-    },
-    text: {
-      color: theme.colors.primary,
-    },
-  });
+
+  const [dramaSeries, setDramaSeries] = useState([]);
+  const [actionSeries, setActionSeries] = useState([]);
+  const [crimeSeries, setCrimeSeries] = useState([]);
+  useEffect(() => {
+    (async () => {
+      const drama = await api.getTVSeries('10765');
+      setDramaSeries(drama);
+      const action = await api.getTVSeries('18');
+      setActionSeries(action);
+      const crime = await api.getTVSeries('80');
+      setCrimeSeries(crime);
+    })();
+  }, []);
+
   return (
-    <View style={styles.container}>
-      <Title style={styles.text}>Series Screen</Title>
-    </View>
+    <SafeAreaView style={{ backgroundColor: theme.colors.surface }}>
+      <ScrollView>
+        <FlatListSmallTV navigation={navigation} data={actionSeries} heading="action" />
+        <FlatListSmallTV navigation={navigation} data={crimeSeries} heading="crime" />
+        <FlatListSmallTV navigation={navigation} data={dramaSeries} heading="drama" />
+        <Button>Show more...</Button>
+      </ScrollView>
+    </SafeAreaView>
   );
 };
 

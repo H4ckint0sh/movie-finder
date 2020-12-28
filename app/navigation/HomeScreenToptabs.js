@@ -6,6 +6,7 @@ import Animated from 'react-native-reanimated';
 import MovieScreen from '../screens/trending/TrendingMoviesScreen';
 import TVScreen from '../screens/trending/TrendingTvSeriesScreen';
 import PersonsScreen from '../screens/trending/TrendingPersonsScreen';
+import SingleMovieScreen from '../screens/SingleMovieScreen';
 
 function CustomTabbar({ state, descriptors, navigation, position }) {
   const theme = useTheme();

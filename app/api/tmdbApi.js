@@ -57,12 +57,22 @@ const getBYGenre = async (id) => {
   return movies;
 };
 
+const getTVSeries = async (id) => {
+  const API_URL = `/discover/tv?api_key=${API_KEY}&with_genres=${id}`;
+  const {
+    data: { results },
+  } = await client.get(API_URL);
+  const series = editData(results)
+  return series;
+  //api.themoviedb.org/3/discover/movie?api_key=97e0e0d17699c5d9bf1092bdd6cd50a5&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1&with_genres=10765
+}
+
 const getNowPlaying = async () => {
   const API_URL = `/movie/now_playing?api_key=${API_KEY}&language=en-US&page=1`;
   const {
     data: { results },
   } = await client.get(API_URL);
-  const movies = editData(resultss);
+  const movies = editData(results);
   return movies;
 };
 
@@ -86,4 +96,5 @@ export default {
   getBYGenre,
   getNowPlaying,
   multiSearch,
+  getTVSeries,
 };

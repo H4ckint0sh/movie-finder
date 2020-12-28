@@ -1,18 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import {
-  Image,
-  StyleSheet,
-  View,
-  Dimensions,
-  SafeAreaView,
-} from 'react-native';
+import {SafeAreaView,} from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
-import { useTheme } from 'react-native-paper';
+import { useTheme, Button } from 'react-native-paper';
 import api from '../api/tmdbApi';
 import FlatListSmall from '../components/flatlist/FlatListSmall';
 import FlatListBig from '../components/flatlist/FlatListBig';
 
-const MoviesScreen = () => {
+const MoviesScreen = ({ navigation }) => {
   const theme = useTheme();
 
   const [playingMovies, setPlayingMovies] = useState([]);
@@ -33,9 +27,10 @@ const MoviesScreen = () => {
   return (
     <SafeAreaView style={{ backgroundColor: theme.colors.surface }}>
       <ScrollView>
-        <FlatListBig data={playingMovies} heading="In Cinemas" />
-        <FlatListSmall data={actionMovies} heading="action" />
-        <FlatListSmall data={dramaMovies} heading="drama" />
+        <FlatListBig navigation={navigation} data={playingMovies} heading="In Cinemas NOW!" />
+        <FlatListSmall navigation={navigation} data={actionMovies} heading="action" />
+        <FlatListSmall navigation={navigation} data={dramaMovies} heading="drama" />
+        <Button>Show more...</Button>
       </ScrollView>
     </SafeAreaView>
   );
