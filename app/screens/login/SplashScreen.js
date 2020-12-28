@@ -1,10 +1,12 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useContext } from 'react';
 import { StyleSheet, Text, View, ActivityIndicator, Image } from 'react-native';
 import { useTheme } from '@react-navigation/native';
+import { userContext } from '../../context/userContext';
 import firebase from 'firebase';
 
 const SplashScreen = ({ navigation }) => {
   const theme = useTheme();
+  const [user, setUser] = useContext(userContext);
   const styles = StyleSheet.create({
     container: {
       flex: 1,
@@ -19,18 +21,19 @@ const SplashScreen = ({ navigation }) => {
   });
 
   useEffect(() => {
-    // checkIfLoggedIn();
+    checkIfLoggedIn();
   }, []);
 
-  // const checkIfLoggedIn = ({ navigation }) => {
-  //   firebase.auth().onAuthStateChanged((user) => {
-  //     if (user) {
-  //       navigation.navigate('BottomTabs');
-  //     } else {
-  //       navigation.navigate('Welcome');
-  //     }
-  //   });
-  // };
+  const checkIfLoggedIn = () => {
+    firebase.auth().onAuthStateChanged((user) => {
+      if (user) {
+        setUser(user);
+        navigation.navigate('BottomTabs');
+      } else {
+        navigation.navigate('Welcome');
+      }
+    });
+  };
 
   return (
     <View style={styles.container}>

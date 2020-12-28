@@ -89,7 +89,7 @@ const RegisterScreen = ({ navigation, firebase }) => {
         const { uid } = response.user;
         const userData = { email, name, uid };
         await firebase.createNewUser(userData);
-        navigation.navigate('BottomTabs');
+        navigation.navigate('Login');
       }
     } catch (error) {
       console.error(error);
