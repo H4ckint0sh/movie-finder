@@ -5,7 +5,6 @@ import {
   DarkTheme,
 } from 'react-native-paper';
 import { NavigationContainer } from '@react-navigation/native';
-import BottomNavigator from '../navigation/BottomTabNavigator';
 import { useColorScheme } from 'react-native-appearance';
 import PreferencesContext from '../context/preferencesContext';
 import LoginNavigation from '../navigation/LoginNavigation';

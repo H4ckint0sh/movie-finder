@@ -1,6 +1,7 @@
 export default firebaseConfig = {
   apiKey: 'AIzaSyD9MdGrLPKgPJDzTRsscPw4W6keLixClmk',
   authDomain: 'movie-finder-67f4a.firebaseapp.com',
+  databaseURL: 'https://movie-finder-67f4a-default-rtdb.firebaseio.com',
   projectId: 'movie-finder-67f4a',
   storageBucket: 'movie-finder-67f4a.appspot.com',
   messagingSenderId: '868124637531',
