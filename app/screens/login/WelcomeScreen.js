@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, Image, ImageBackground } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import * as Animatable from 'react-native-animatable';
 import { Title, Button, useTheme } from 'react-native-paper';
 import * as Google from 'expo-google-app-auth';

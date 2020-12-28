@@ -59,6 +59,7 @@ const LoginScreen = ({ navigation, firebase }) => {
       borderBottomLeftRadius: 50,
       margin: 8,
       overflow: 'hidden',
+      backgroundColor: theme.colors.disabled,
     },
     loginButton: {
       width: '80%',
@@ -75,6 +76,7 @@ const LoginScreen = ({ navigation, firebase }) => {
     },
     register: {
       marginTop: 25,
+      color: theme.colors.onSurface,
     },
     registerButton: {
       color: '#007AFF',
@@ -114,102 +116,97 @@ const LoginScreen = ({ navigation, firebase }) => {
       behavior={Platform.OS == 'ios' ? 'padding' : 'height'}
       style={styles.container}
     >
-      <ImageBackground
-        style={{ width: '100%', flex: 1 }}
-        source={require('../../../assets/movie-background.jpg')}
+      <View style={styles.header}>
+        <Animatable.Image
+          animation="bounce"
+          duration={1500}
+          style={styles.movieLogo}
+          source={require('../../../assets/logo.png')}
+        />
+      </View>
+      <Animatable.View
+        style={styles.footer}
+        animation="slideInUp"
+        duration={1000}
       >
-        <View style={styles.header}>
-          <Animatable.Image
-            animation="bounce"
-            duration={1500}
-            style={styles.movieLogo}
-            source={require('../../../assets/logo.png')}
-          />
-        </View>
-        <Animatable.View
-          style={styles.footer}
-          animation="slideInUp"
-          duration={1000}
+        <Formik
+          initialValues={{ email: '', password: '' }}
+          onSubmit={(values, actions) => {
+            handleOnLogin(values, actions);
+          }}
+          validationSchema={validateSchema}
         >
-          <Formik
-            initialValues={{ email: '', password: '' }}
-            onSubmit={(values, actions) => {
-              handleOnLogin(values, actions);
-            }}
-            validationSchema={validateSchema}
-          >
-            {({
-              values,
-              handleChange,
-              handleSubmit,
-              errors,
-              setFieldTouched,
-              touched,
-            }) => (
-              <>
-                <Title style={{ marginVertical: 20 }}>Sign in</Title>
-                <TextInput
-                  style={styles.input}
-                  value={values.email}
-                  mode="flat"
-                  underlineColor="transparent"
-                  left={<TextInput.Icon name="email" />}
-                  placeholder="Email"
-                  autoCapitalize="none"
-                  autoCorrect={false}
-                  keyboardType="email-address"
-                  onChangeText={handleChange('email')}
-                  onBlur={() => setFieldTouched('email')}
-                  textContentType="emailAddress"
-                />
-                <ErrorMessage error={errors.email} visible={touched.email} />
-                <TextInput
-                  style={[styles.input]}
-                  value={values.password}
-                  mode="flat"
-                  underlineColor="transparent"
-                  left={<TextInput.Icon name="lock" />}
-                  placeholder="Password"
-                  autoCapitalize="none"
-                  autoCorrect={false}
-                  textContentType="password"
-                  onChangeText={handleChange('password')}
-                  onBlur={() => setFieldTouched('password')}
-                  secureTextEntry={true}
-                />
-                <ErrorMessage
-                  error={errors.password}
-                  visible={touched.password}
-                />
-                <Button
-                  style={styles.loginButton}
-                  labelStyle={styles.label}
-                  mode="contained"
-                  onPress={handleSubmit}
+          {({
+            values,
+            handleChange,
+            handleSubmit,
+            errors,
+            setFieldTouched,
+            touched,
+          }) => (
+            <>
+              <Title style={{ marginVertical: 20 }}>Sign in</Title>
+              <TextInput
+                style={styles.input}
+                value={values.email}
+                mode="flat"
+                underlineColor="transparent"
+                left={<TextInput.Icon name="email" />}
+                placeholder="Email"
+                autoCapitalize="none"
+                autoCorrect={false}
+                keyboardType="email-address"
+                onChangeText={handleChange('email')}
+                onBlur={() => setFieldTouched('email')}
+                textContentType="emailAddress"
+              />
+              <ErrorMessage error={errors.email} visible={touched.email} />
+              <TextInput
+                style={[styles.input]}
+                value={values.password}
+                mode="flat"
+                underlineColor="transparent"
+                left={<TextInput.Icon name="lock" />}
+                placeholder="Password"
+                autoCapitalize="none"
+                autoCorrect={false}
+                textContentType="password"
+                onChangeText={handleChange('password')}
+                onBlur={() => setFieldTouched('password')}
+                secureTextEntry={true}
+              />
+              <ErrorMessage
+                error={errors.password}
+                visible={touched.password}
+              />
+              <Button
+                style={styles.loginButton}
+                labelStyle={styles.label}
+                mode="contained"
+                onPress={handleSubmit}
+              >
+                Login
+              </Button>
+              <Button
+                style={styles.continueButton}
+                mode="contained"
+                onPress={() => navigation.navigate('BottomTabs')}
+              >
+                Continue without signing in
+              </Button>
+              <Text style={styles.register}>
+                Don't have an account?{' '}
+                <Text
+                  style={styles.registerButton}
+                  onPress={() => navigation.navigate('Register')}
                 >
-                  Login
-                </Button>
-                <Button
-                  style={styles.continueButton}
-                  mode="contained"
-                  onPress={() => navigation.navigate('BottomTabs')}
-                >
-                  Continue without signing in
-                </Button>
-                <Text style={styles.register}>
-                  Don't have an account?{' '}
-                  <Text
-                    style={styles.registerButton}
-                    onPress={() => navigation.navigate('Register')}
-                  >
-                    Register
-                  </Text>
+                  Register
                 </Text>
-              </>
-            )}
-          </Formik>
-        </Animatable.View>
-      </ImageBackground>
+              </Text>
+            </>
+          )}
+        </Formik>
+      </Animatable.View>
     </KeyboardAvoidingView>
   );
 };

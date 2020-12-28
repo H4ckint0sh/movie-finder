@@ -50,6 +50,7 @@ const RegisterScreen = ({ navigation, firebase }) => {
       justifyContent: 'center',
       alignSelf: 'center',
       width: '80%',
+      backgroundColor: theme.colors.disabled,
       height: 55,
       borderTopRightRadius: 50,
       borderTopLeftRadius: 50,
@@ -66,6 +67,7 @@ const RegisterScreen = ({ navigation, firebase }) => {
     },
     register: {
       marginTop: 15,
+      color: theme.colors.onSurface,
     },
     signIn: {
       color: '#007AFF',
@@ -110,131 +112,126 @@ const RegisterScreen = ({ navigation, firebase }) => {
       behavior={Platform.OS == 'ios' ? 'padding' : 'height'}
       style={styles.container}
     >
-      <ImageBackground
-        style={{ width: '100%', flex: 1 }}
-        source={require('../../../assets/movie-background.jpg')}
+      <View style={styles.header}>
+        <Animatable.Image
+          animation="bounce"
+          duration={1500}
+          style={styles.movieLogo}
+          source={require('../../../assets/logo.png')}
+        />
+      </View>
+      <Animatable.View
+        style={styles.footer}
+        animation="slideInUp"
+        duration={1000}
       >
-        <View style={styles.header}>
-          <Animatable.Image
-            animation="bounce"
-            duration={1500}
-            style={styles.movieLogo}
-            source={require('../../../assets/logo.png')}
-          />
-        </View>
-        <Animatable.View
-          style={styles.footer}
-          animation="slideInUp"
-          duration={1000}
+        <Formik
+          initialValues={{
+            name: '',
+            email: '',
+            password: '',
+            confirmPassword: '',
+          }}
+          onSubmit={(values, actions) => {
+            handleOnSignup(values, actions);
+          }}
+          validationSchema={validateSchema}
         >
-          <Formik
-            initialValues={{
-              name: '',
-              email: '',
-              password: '',
-              confirmPassword: '',
-            }}
-            onSubmit={(values, actions) => {
-              handleOnSignup(values, actions);
-            }}
-            validationSchema={validateSchema}
-          >
-            {({
-              values,
-              handleChange,
-              handleSubmit,
-              errors,
-              setFieldTouched,
-              touched,
-              isValid,
-              isSubmitting,
-            }) => (
-              <>
-                <Title style={{ marginVertical: 20 }}>Register</Title>
-                <TextInput
-                  style={styles.input}
-                  mode="flat"
-                  underlineColor="transparent"
-                  left={<TextInput.Icon name="account" />}
-                  placeholder="Name"
-                  autoCapitalize="none"
-                  autoCorrect={false}
-                  keyboardType="default"
-                  onChangeText={handleChange('name')}
-                  onBlur={() => setFieldTouched('name')}
-                  textContentType="username"
-                />
-                <ErrorMessage error={errors.name} visible={touched.name} />
-                <TextInput
-                  style={styles.input}
-                  mode="flat"
-                  underlineColor="transparent"
-                  left={<TextInput.Icon name="email" />}
-                  placeholder="Email"
-                  autoCapitalize="none"
-                  autoCorrect={false}
-                  keyboardType="email-address"
-                  onChangeText={handleChange('email')}
-                  onBlur={() => setFieldTouched('email')}
-                  textContentType="emailAddress"
-                />
-                <ErrorMessage error={errors.email} visible={touched.email} />
-                <TextInput
-                  style={[styles.input]}
-                  mode="flat"
-                  underlineColor="transparent"
-                  left={<TextInput.Icon name="lock" />}
-                  placeholder="Password"
-                  autoCapitalize="none"
-                  autoCorrect={false}
-                  textContentType="password"
-                  onChangeText={handleChange('password')}
-                  onBlur={() => setFieldTouched('password')}
-                  secureTextEntry={true}
-                />
-                <ErrorMessage
-                  error={errors.password}
-                  visible={touched.password}
-                />
-                <TextInput
-                  style={[styles.input]}
-                  mode="flat"
-                  underlineColor="transparent"
-                  left={<TextInput.Icon name="lock" />}
-                  placeholder="Confirm password"
-                  autoCapitalize="none"
-                  autoCorrect={false}
-                  textContentType="password"
-                  onChangeText={handleChange('confirmPassword')}
-                  onBlur={() => setFieldTouched('confirmPassword')}
-                  secureTextEntry={true}
-                />
-                <ErrorMessage
-                  error={errors.confirmPassword}
-                  visible={touched.confirmPassword}
-                />
-                <Button
-                  style={styles.registerButton}
-                  labelStyle={styles.label}
-                  mode="contained"
-                  onPress={handleSubmit}
+          {({
+            values,
+            handleChange,
+            handleSubmit,
+            errors,
+            setFieldTouched,
+            touched,
+            isValid,
+            isSubmitting,
+          }) => (
+            <>
+              <Title style={{ marginVertical: 20 }}>Register</Title>
+              <TextInput
+                style={styles.input}
+                mode="flat"
+                underlineColor="transparent"
+                left={<TextInput.Icon name="account" />}
+                placeholder="Name"
+                autoCapitalize="none"
+                autoCorrect={false}
+                keyboardType="default"
+                onChangeText={handleChange('name')}
+                onBlur={() => setFieldTouched('name')}
+                textContentType="username"
+              />
+              <ErrorMessage error={errors.name} visible={touched.name} />
+              <TextInput
+                style={styles.input}
+                mode="flat"
+                underlineColor="transparent"
+                left={<TextInput.Icon name="email" />}
+                placeholder="Email"
+                autoCapitalize="none"
+                autoCorrect={false}
+                keyboardType="email-address"
+                onChangeText={handleChange('email')}
+                onBlur={() => setFieldTouched('email')}
+                textContentType="emailAddress"
+              />
+              <ErrorMessage error={errors.email} visible={touched.email} />
+              <TextInput
+                style={[styles.input]}
+                mode="flat"
+                underlineColor="transparent"
+                left={<TextInput.Icon name="lock" />}
+                placeholder="Password"
+                autoCapitalize="none"
+                autoCorrect={false}
+                textContentType="password"
+                onChangeText={handleChange('password')}
+                onBlur={() => setFieldTouched('password')}
+                secureTextEntry={true}
+              />
+              <ErrorMessage
+                error={errors.password}
+                visible={touched.password}
+              />
+              <TextInput
+                style={[styles.input]}
+                mode="flat"
+                underlineColor="transparent"
+                left={<TextInput.Icon name="lock" />}
+                placeholder="Confirm password"
+                autoCapitalize="none"
+                autoCorrect={false}
+                textContentType="password"
+                onChangeText={handleChange('confirmPassword')}
+                onBlur={() => setFieldTouched('confirmPassword')}
+                secureTextEntry={true}
+              />
+              <ErrorMessage
+                error={errors.confirmPassword}
+                visible={touched.confirmPassword}
+              />
+              <Button
+                style={styles.registerButton}
+                labelStyle={styles.label}
+                mode="contained"
+                onPress={handleSubmit}
+              >
+                register
+              </Button>
+              <Text style={styles.register}>
+                Already have an account?{' '}
+                <Text
+                  style={styles.signIn}
+                  onPress={() => navigation.push('Login')}
                 >
-                  register
-                </Button>
-                <Text style={styles.register}>
-                  Already have an account?{' '}
-                  <Text
-                    style={styles.signIn}
-                    onPress={() => navigation.push('Login')}
-                  >
-                    Sign in
-                  </Text>
+                  Sign in
                 </Text>
-              </>
-            )}
-          </Formik>
-        </Animatable.View>
-      </ImageBackground>
+              </Text>
+            </>
+          )}
+        </Formik>
+      </Animatable.View>
     </KeyboardAvoidingView>
   );
 };
