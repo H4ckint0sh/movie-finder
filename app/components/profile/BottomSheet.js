@@ -47,7 +47,7 @@ const BottomSheetComp = ({ setImage, bs }) => {
       if (Platform.OS !== 'web') {
         const {
           status,
-        } = await ImagePicker.requestMediaLibraryPermissionsAsync();
+				} = await ImagePicker.requestMediaLibraryPermissionsAsync();
         if (status !== 'granted') {
           alert('Sorry, we need camera roll permissions to make this work!');
         }
@@ -61,12 +61,13 @@ const BottomSheetComp = ({ setImage, bs }) => {
       allowsEditing: true,
       aspect: [4, 3],
       quality: 1,
-    });
-
-    console.log(result);
+		});
+		
+		// get current users uid
+		const {uid} = firebase.auth().currentUser;
 
     if (!result.cancelled) {
-      uploadImage(result.uri, 'test-image');
+      uploadImage(result.uri, `${uid}`);
     }
   };
 
@@ -74,8 +75,6 @@ const BottomSheetComp = ({ setImage, bs }) => {
     const response = await fetch(uri);
     const blob = await response.blob();
 
-		// const {uid} = firebase.auth().currentUser;
-		// console.log(uid);
     const ref = firebase.storage().ref().child(`images/${imageName}`);
     await ref.put(blob);
 
@@ -126,7 +125,7 @@ const BottomSheetComp = ({ setImage, bs }) => {
           mode="contained"
           style={styles.button}
           labelStyle={{ color: 'white' }}
-          onPress={pickImage}
+          onPress={() => {pickImage(); bs.current.snapTo(1);}}
         >
           Choose a photo from library
         </Button>
