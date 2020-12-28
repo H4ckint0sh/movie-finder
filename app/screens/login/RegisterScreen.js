@@ -1,5 +1,11 @@
 import React from 'react';
-import { StyleSheet, Text, View, Image, ImageBackground } from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  View,
+  KeyboardAvoidingView,
+  ImageBackground,
+} from 'react-native';
 import * as Animatable from 'react-native-animatable';
 import { Title, Button, useTheme } from 'react-native-paper';
 import { Formik } from 'formik';
@@ -100,7 +106,10 @@ const RegisterScreen = ({ navigation, firebase }) => {
   };
 
   return (
-    <View style={styles.container}>
+    <KeyboardAvoidingView
+      behavior={Platform.OS == 'ios' ? 'padding' : 'height'}
+      style={styles.container}
+    >
       <ImageBackground
         style={{ width: '100%', flex: 1 }}
         source={require('../../../assets/movie-background.jpg')}
@@ -226,7 +235,7 @@ const RegisterScreen = ({ navigation, firebase }) => {
           </Formik>
         </Animatable.View>
       </ImageBackground>
-    </View>
+    </KeyboardAvoidingView>
   );
 };
 
