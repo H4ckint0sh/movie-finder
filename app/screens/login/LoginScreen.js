@@ -1,5 +1,12 @@
 import React, { useContext, useEffect } from 'react';
-import { StyleSheet, Text, View, Image, ImageBackground } from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  View,
+  Image,
+  ImageBackground,
+  KeyboardAvoidingView,
+} from 'react-native';
 import * as Animatable from 'react-native-animatable';
 import { Title, Button } from 'react-native-paper';
 import { useTheme } from '@react-navigation/native';
@@ -102,7 +109,10 @@ const LoginScreen = ({ navigation, firebase }) => {
   };
 
   return (
-    <View style={styles.container}>
+    <KeyboardAvoidingView
+      behavior={Platform.OS == 'ios' ? 'padding' : 'height'}
+      style={styles.container}
+    >
       <ImageBackground
         style={{ width: '100%', flex: 1 }}
         source={require('../../../assets/movie-background.jpg')}
@@ -199,7 +209,7 @@ const LoginScreen = ({ navigation, firebase }) => {
           </Formik>
         </Animatable.View>
       </ImageBackground>
-    </View>
+    </KeyboardAvoidingView>
   );
 };
 

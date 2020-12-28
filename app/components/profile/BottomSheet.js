@@ -5,7 +5,7 @@ import { useTheme, Button } from 'react-native-paper';
 import * as ImagePicker from 'expo-image-picker';
 import * as firebase from 'firebase';
 import 'firebase/storage';
-import Firebase from '../../config/Firebase'
+import Firebase from '../../config/Firebase';
 
 const BottomSheetComp = ({ setImage, bs }) => {
   const theme = useTheme();
@@ -44,12 +44,20 @@ const BottomSheetComp = ({ setImage, bs }) => {
 
   useEffect(() => {
     (async () => {
+      const mediaPermission = await ImagePicker.getCameraRollPermissionsAsync();
       if (Platform.OS !== 'web') {
         const {
           status,
-				} = await ImagePicker.requestMediaLibraryPermissionsAsync();
+        } = await ImagePicker.requestCameraRollPermissionsAsync();
         if (status !== 'granted') {
           alert('Sorry, we need camera roll permissions to make this work!');
+        }
+      }
+      const cameraPermission = await ImagePicker.getCameraPermissionsAsync();
+      if (Platform.OS !== 'web' && cameraPermission.status !== 'granted') {
+        const { status } = await ImagePicker.requestCameraPermissionsAsync();
+        if (status !== 'granted') {
+          alert('Sorry, we need camera permissions to make this work!');
         }
       }
     })();
@@ -61,10 +69,25 @@ const BottomSheetComp = ({ setImage, bs }) => {
       allowsEditing: true,
       aspect: [4, 3],
       quality: 1,
-		});
-		
-		// get current users uid
-		const {uid} = firebase.auth().currentUser;
+    });
+
+    // get current users uid
+    const { uid } = firebase.auth().currentUser;
+
+    if (!result.cancelled) {
+      uploadImage(result.uri, `${uid}`);
+    }
+  };
+
+  const takeImage = async () => {
+    let result = await ImagePicker.launchCameraAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
+    });
+    // get current users uid
+    const { uid } = firebase.auth().currentUser;
 
     if (!result.cancelled) {
       uploadImage(result.uri, `${uid}`);
@@ -81,9 +104,9 @@ const BottomSheetComp = ({ setImage, bs }) => {
     ref
       .getDownloadURL()
       .then(function (url) {
-				// setImage(url);
-				const update = {photoURL: url};
-				Firebase.updateProfile(update);
+        // setImage(url);
+        const update = { photoURL: url };
+        Firebase.updateProfile(update);
       })
       .catch(function (error) {
         switch (error.code) {
@@ -116,6 +139,10 @@ const BottomSheetComp = ({ setImage, bs }) => {
           icon="camera"
           style={styles.button}
           labelStyle={{ color: 'white' }}
+          onPress={() => {
+            takeImage();
+            bs.current.snapTo(1);
+          }}
         >
           Take a photo
         </Button>
@@ -125,7 +152,10 @@ const BottomSheetComp = ({ setImage, bs }) => {
           mode="contained"
           style={styles.button}
           labelStyle={{ color: 'white' }}
-          onPress={() => {pickImage(); bs.current.snapTo(1);}}
+          onPress={() => {
+            pickImage();
+            bs.current.snapTo(1);
+          }}
         >
           Choose a photo from library
         </Button>
