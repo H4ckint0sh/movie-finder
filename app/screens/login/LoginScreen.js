@@ -52,7 +52,7 @@ const LoginScreen = ({ navigation, firebase }) => {
       justifyContent: 'center',
       alignSelf: 'center',
       width: '80%',
-      height: 55,
+      height: 50,
       borderTopRightRadius: 50,
       borderTopLeftRadius: 50,
       borderBottomRightRadius: 50,
@@ -145,7 +145,7 @@ const LoginScreen = ({ navigation, firebase }) => {
             touched,
           }) => (
             <>
-              <Title style={{ marginVertical: 20 }}>Sign in</Title>
+              <Title style={{ marginVertical: 10 }}>Sign in</Title>
               <TextInput
                 style={styles.input}
                 value={values.email}

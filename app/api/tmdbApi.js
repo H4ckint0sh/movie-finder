@@ -81,6 +81,7 @@ const multiSearch = async (query) => {
   const {
     data: { results },
   } = await client.get(API_URL);
+  console.log(results);
   const moviesResults = results.filter((item) => item.media_type === 'movie');
   const movies = editData(moviesResults);
 

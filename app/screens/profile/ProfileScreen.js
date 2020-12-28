@@ -1,9 +1,5 @@
 import React, { useContext, useState, useRef, useEffect } from 'react';
-import {
-  StyleSheet,
-  View,
-  TextInput,
-} from 'react-native';
+import { StyleSheet, View, TextInput } from 'react-native';
 import {
   Title,
   useTheme,
@@ -27,15 +23,15 @@ const ProfileScreen = ({ navigation }) => {
   const [user, setUser] = useContext(userContext);
   const { theme, toggleTheme, setPrimaryColor } = useContext(
     preferencesContext
-	);
-	
-	// bottomsheet refrense
+  );
+
+  // bottomsheet refrense
   const bs = useRef(null);
 
   const [isSwitchOn, setIsSwitchOn] = useState(false);
   const onToggleSwitch = () => setIsSwitchOn(!isSwitchOn);
 
-	// visability of peimarycolor dialog
+  // visability of peimarycolor dialog
   const [visible, setVisible] = useState(false);
 
   const [newEmail, setNewEmail] = useState('');
@@ -43,8 +39,8 @@ const ProfileScreen = ({ navigation }) => {
   const [showPasswordEdit, setShowPasswordEdit] = useState(false);
   const [password, setPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
-	
-	// uploaded image
+
+  // uploaded image
   const [image, setImage] = useState(null);
 
   const handleSignOut = () => {
@@ -142,20 +138,22 @@ const ProfileScreen = ({ navigation }) => {
               : 'https://randomuser.me/api/portraits/men/45.jpg',
           }}
         />
-        <IconButton
-          style={{
-            position: 'absolute',
-            bottom: 0,
-            left: 70,
-            backgroundColor: paperTheme.colors.surface,
-            borderWidth: 1,
-            borderColor: paperTheme.colors.disabled,
-          }}
-          icon="camera-plus"
-          color={paperTheme.colors.disabled}
-          size={15}
-          onPress={() => bs.current.snapTo(0)}
-        />
+        {user.providerData[0].providerId == 'google.com' ? null : (
+          <IconButton
+            style={{
+              position: 'absolute',
+              bottom: 0,
+              left: 70,
+              backgroundColor: paperTheme.colors.surface,
+              borderWidth: 1,
+              borderColor: paperTheme.colors.disabled,
+            }}
+            icon="camera-plus"
+            color={paperTheme.colors.disabled}
+            size={15}
+            onPress={() => bs.current.snapTo(0)}
+          />
+        )}
         <View style={styles.nameContainer}>
           <Title>{user.displayName ? user.displayName : 'No name'}</Title>
           <Caption>@H4ckint0sh</Caption>
@@ -188,11 +186,13 @@ const ProfileScreen = ({ navigation }) => {
         <List.Item
           title={user.email ? user.email : ''}
           left={(props) => <List.Icon {...props} icon="email-outline" />}
-          right={(props) => (
-            <Button onPress={() => setShowEmailEdit(!showEmailEdit)}>
-              {showEmailEdit ? 'cancel' : 'change'}
-            </Button>
-          )}
+          right={(props) =>
+            user.providerData[0].providerId == 'google.com' ? null : (
+              <Button onPress={() => setShowEmailEdit(!showEmailEdit)}>
+                {showEmailEdit ? 'cancel' : 'change'}
+              </Button>
+            )
+          }
         />
         {showEmailEdit && (
           <View style={{ marginHorizontal: 15 }}>
@@ -230,11 +230,13 @@ const ProfileScreen = ({ navigation }) => {
         <List.Item
           title="********"
           left={(props) => <List.Icon {...props} icon="key-outline" />}
-          right={(props) => (
-            <Button onPress={() => setShowPasswordEdit(!showPasswordEdit)}>
-              {showPasswordEdit ? 'cancel' : 'change'}
-            </Button>
-          )}
+          right={(props) =>
+            user.providerData[0].providerId == 'google.com' ? null : (
+              <Button onPress={() => setShowPasswordEdit(!showPasswordEdit)}>
+                {showPasswordEdit ? 'cancel' : 'change'}
+              </Button>
+            )
+          }
         />
         {showPasswordEdit && (
           <View style={{ marginHorizontal: 15 }}>
@@ -265,7 +267,11 @@ const ProfileScreen = ({ navigation }) => {
         )}
       </View>
       <Divider />
-			<PrimaryColor setPrimaryColor={setPrimaryColor} visible={visible} setVisible={setVisible}/>
+      <PrimaryColor
+        setPrimaryColor={setPrimaryColor}
+        visible={visible}
+        setVisible={setVisible}
+      />
       <Divider />
       <List.Item
         title="Light Theme"
