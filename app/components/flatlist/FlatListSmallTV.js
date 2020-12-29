@@ -1,8 +1,6 @@
 import React from 'react';
 import { StyleSheet, Dimensions, View, FlatList } from 'react-native';
-import { Card, Headline, Title, Paragraph, Text } from 'react-native-paper';
-import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
+import { Card, Headline } from 'react-native-paper';
 
 const { width, height } = Dimensions.get('screen');
 
@@ -11,7 +9,7 @@ const ITEM_HEIGHT = ITEM_WIDTH * 1;
 const SPACE = (width - ITEM_WIDTH) / 2;
 
 const FlatListSmallTV = ({ navigation, data, heading }) => {
-console.log(data)
+  console.log(data);
   return (
     <View style={styles.container}>
       <Headline style={styles.headline}>{heading}</Headline>
@@ -35,9 +33,9 @@ console.log(data)
                 width: 150,
                 height: 200,
                 marginRight: 15,
-                borderRadius: 10
+                borderRadius: 10,
               }}
-              onPress={() => navigation.navigate('SingleMovie', {item})}
+              onPress={() => navigation.navigate('SingleMovie', { item })}
             >
               <Card.Cover
                 source={{
@@ -46,7 +44,7 @@ console.log(data)
                 style={{
                   width: 150,
                   height: 200,
-                  borderRadius: 10
+                  borderRadius: 10,
                 }}
               />
             </Card>

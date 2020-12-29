@@ -1,4 +1,4 @@
-import React, { useContext, useState, useRef, useEffect } from 'react';
+import React, { useContext, useState, useRef } from 'react';
 import { StyleSheet, View, TextInput } from 'react-native';
 import {
   Title,
@@ -46,6 +46,7 @@ const ProfileScreen = ({ navigation }) => {
   const handleSignOut = () => {
     try {
       Firebase.signOut();
+      setUser({});
       navigation.navigate('Welcome');
     } catch (error) {
       console.log(error);
@@ -125,6 +126,22 @@ const ProfileScreen = ({ navigation }) => {
       borderRadius: 25,
     },
   });
+
+  if (!user.email) {
+    return (
+      <View
+        style={{
+          flex: 1,
+          justifyContent: 'center',
+          alignItems: 'center',
+          backgroundColor: paperTheme.colors.surface,
+        }}
+      >
+        <Title>No profile found!</Title>
+        <Button onPress={() => navigation.navigate('Welcome')}>login ?</Button>
+      </View>
+    );
+  }
   return (
     <View style={styles.container}>
       <BottomSheetComp setImage={setImage} bs={bs} />
@@ -138,24 +155,28 @@ const ProfileScreen = ({ navigation }) => {
               : 'https://randomuser.me/api/portraits/men/45.jpg',
           }}
         />
-        {user.providerData[0].providerId == 'google.com' ? null : (
-          <IconButton
-            style={{
-              position: 'absolute',
-              bottom: 0,
-              left: 70,
-              backgroundColor: paperTheme.colors.surface,
-              borderWidth: 1,
-              borderColor: paperTheme.colors.disabled,
-            }}
-            icon="camera-plus"
-            color={paperTheme.colors.disabled}
-            size={15}
-            onPress={() => bs.current.snapTo(0)}
-          />
-        )}
+        {user.email ? (
+          user.providerData[0].providerId == 'google.com' ? null : (
+            <IconButton
+              style={{
+                position: 'absolute',
+                bottom: 0,
+                left: 70,
+                backgroundColor: paperTheme.colors.surface,
+                borderWidth: 1,
+                borderColor: paperTheme.colors.disabled,
+              }}
+              icon="camera-plus"
+              color={paperTheme.colors.disabled}
+              size={15}
+              onPress={() => bs.current.snapTo(0)}
+            />
+          )
+        ) : null}
         <View style={styles.nameContainer}>
-          <Title>{user.displayName ? user.displayName : 'No name'}</Title>
+          <Title>
+            {user && user.displayName ? user.displayName : 'No name'}
+          </Title>
           <Caption>@H4ckint0sh</Caption>
         </View>
         <IconButton
@@ -187,11 +208,13 @@ const ProfileScreen = ({ navigation }) => {
           title={user.email ? user.email : ''}
           left={(props) => <List.Icon {...props} icon="email-outline" />}
           right={(props) =>
-            user.providerData[0].providerId == 'google.com' ? null : (
-              <Button onPress={() => setShowEmailEdit(!showEmailEdit)}>
-                {showEmailEdit ? 'cancel' : 'change'}
-              </Button>
-            )
+            user.email ? (
+              user.providerData[0].providerId == 'google.com' ? null : (
+                <Button onPress={() => setShowEmailEdit(!showEmailEdit)}>
+                  {showEmailEdit ? 'cancel' : 'change'}
+                </Button>
+              )
+            ) : null
           }
         />
         {showEmailEdit && (
@@ -231,11 +254,13 @@ const ProfileScreen = ({ navigation }) => {
           title="********"
           left={(props) => <List.Icon {...props} icon="key-outline" />}
           right={(props) =>
-            user.providerData[0].providerId == 'google.com' ? null : (
-              <Button onPress={() => setShowPasswordEdit(!showPasswordEdit)}>
-                {showPasswordEdit ? 'cancel' : 'change'}
-              </Button>
-            )
+            user.email ? (
+              user.providerData[0].providerId == 'google.com' ? null : (
+                <Button onPress={() => setShowPasswordEdit(!showPasswordEdit)}>
+                  {showPasswordEdit ? 'cancel' : 'change'}
+                </Button>
+              )
+            ) : null
           }
         />
         {showPasswordEdit && (
