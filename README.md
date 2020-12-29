@@ -1,4 +1,4 @@
-# movie-finder
+# Movie Finder
 
 ## About the application:
 
