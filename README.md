@@ -1,5 +1,9 @@
 # movie-finder
 
+## About the application:
+
+Movie Finder is an app where YOU could find the movies or series that YOU perhaps want to watch, or help YOU find the thing YOU want to watch. To get access to the app, you will have four options - Sign in, register, sign in with google or just continue without signing in (bare in mind, you won't have access to the whole app if you dont sign in with an account).
+
 ## Requirements: 
 
 * Node (https://nodejs.org/en/)
