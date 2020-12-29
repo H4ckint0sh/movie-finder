@@ -11,5 +11,5 @@
 
 * git clone ;)
 * Always run ```npm i```before starting the project to get all packages installed
-* ```npm start``` or ``expo start``` to start the application
+* ```npm start``` or ```expo start``` to start the application
 * Have fun and enjoy your stay!
