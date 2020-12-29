@@ -2,7 +2,9 @@
 
 ## About the application:
 
-Movie Finder is an app where YOU could find the movies or series that YOU perhaps want to watch, or help YOU find the thing YOU want to watch. The app is built with react native and expo. 
+Movie Finder is an app where YOU could find the movies or series that YOU perhaps want to watch, or help YOU find the thing YOU want to watch. 
+
+The app is built with react native and expo. 
 
 The app contains a trending movie screen where you can find the trending movies, series and persons.
 
