@@ -2,7 +2,7 @@
 
 ## About the application:
 
-Movie Finder is an app where YOU could find the movies or series that YOU perhaps want to watch, or help YOU find the thing YOU want to watch. To get access to the app, you will have four options - Sign in, register, sign in with google or just continue without signing in (bare in mind, you won't have access to the whole app if you dont sign in with an account).
+Movie Finder is an app where YOU could find the movies or series that YOU perhaps want to watch, or help YOU find the thing YOU want to watch. The app is built with react native and expo. The app contains a trending movie screen where you can find the trending movies, series and persons. A movies screen where you could see different movies from different genres. There is also a series screen that is built like the movie screen, where you could see different series from different genres. In the app, there is also a seach screen where you can search for a or multiple movies, that also works with series and persons. Last but not least, the profile screen, which you will only have access to if you sign in to the app.
 
 ## Requirements: 
 
